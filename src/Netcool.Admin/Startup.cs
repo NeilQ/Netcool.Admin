@@ -1,10 +1,11 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Netcool.HttpProxy;
 
 namespace Netcool.Admin
 {
@@ -26,6 +27,14 @@ namespace Netcool.Admin
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
+            services.AddProxy(options => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +56,8 @@ namespace Netcool.Admin
             }
 
             app.UseRouting();
+
+            app.Map("/api", appBuild => { appBuild.RunProxy(new Uri(Configuration["Api:Url"])); });
 
             app.UseEndpoints(endpoints =>
             {
