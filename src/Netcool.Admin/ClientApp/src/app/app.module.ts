@@ -26,7 +26,7 @@ const LANG_PROVIDES = [
 // #endregion
 
 // #region JSON Schema form (using @delon/form)
-import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
+import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 const FORM_MODULES = [ JsonSchemaModule ];
 // #endregion
 
@@ -34,7 +34,7 @@ const FORM_MODULES = [ JsonSchemaModule ];
 // #region Http Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SimpleInterceptor } from '@delon/auth';
-import { DefaultInterceptor } from '@core/net/default.interceptor';
+import { DefaultInterceptor } from './core/net/default.interceptor';
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
@@ -47,7 +47,7 @@ const GLOBAL_THIRD_MODULES = [
 // #endregion
 
 // #region Startup Service
-import { StartupService } from '@core/startup/startup.service';
+import { StartupService } from './core/startup/startup.service';
 export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
 }
@@ -82,13 +82,13 @@ import { LayoutModule } from './layout/layout.module';
     SharedModule,
     LayoutModule,
     RoutesModule,
-    ...FORM_MODULES,
+  //  ...FORM_MODULES,
     ...GLOBAL_THIRD_MODULES
   ],
   providers: [
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,
-    ...APPINIT_PROVIDES
+    ...APPINIT_PROVIDES,
   ],
   bootstrap: [AppComponent]
 })
