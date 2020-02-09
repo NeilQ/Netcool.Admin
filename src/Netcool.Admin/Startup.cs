@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Netcool.HttpProxy;
+using Serilog;
 
 namespace Netcool.Admin
 {
@@ -54,6 +55,12 @@ namespace Netcool.Admin
             {
                 app.UseSpaStaticFiles();
             }
+            
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
