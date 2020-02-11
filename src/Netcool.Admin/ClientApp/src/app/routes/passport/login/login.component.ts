@@ -65,15 +65,12 @@ export class UserLoginComponent  {
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.http
       .post('api/account/authenticate?_allow_anonymous=true', {
-        userName: this.userName.value,
+        name: this.userName.value,
         password: this.password.value,
       })
       .subscribe((res: any) => {
         console.log(res);
-        if (res.msg !== 'ok') {
-          this.error = res.msg;
-          return;
-        }
+
         // 清空路由复用信息
         this.reuseTabService.clear();
         // 设置用户Token信息
