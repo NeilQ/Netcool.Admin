@@ -54,10 +54,9 @@ export function fnPageHeaderConfig(): PageHeaderConfig {
 import {DelonAuthConfig} from '@delon/auth';
 
 export function fnDelonAuthConfig(): DelonAuthConfig {
-  return {
-    ...new DelonAuthConfig(),
-    login_url: '/passport/login',
-  };
+  return Object.assign(new DelonAuthConfig(), {
+    login_url: '/passport/login'
+  });
 }
 
 // tslint:disable-next-line: no-duplicate-imports

@@ -13,7 +13,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { DA_SERVICE_TOKEN, ITokenService, SimpleInterceptor} from '@delon/auth';
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -32,6 +32,14 @@ const CODEMESSAGE = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
+@Injectable()
+export class AuthorizationInterceptor extends SimpleInterceptor{
+  constructor(protected injector:Injector) {
+    super(injector);
+  }
+
+}
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
