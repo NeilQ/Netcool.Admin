@@ -1,11 +1,11 @@
-import { SettingsService, _HttpClient } from '@delon/theme';
-import {Component,  Inject, Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { ITokenService, DA_SERVICE_TOKEN} from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
-import { StartupService } from '@core';
+import {SettingsService, _HttpClient} from '@delon/theme';
+import {Component, Inject, Optional} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {ITokenService, DA_SERVICE_TOKEN} from '@delon/auth';
+import {ReuseTabService} from '@delon/abc';
+import {StartupService} from '@core';
 
 @Component({
   selector: 'passport-login',
@@ -13,7 +13,7 @@ import { StartupService } from '@core';
   styleUrls: ['./login.component.less'],
   providers: [],
 })
-export class UserLoginComponent  {
+export class UserLoginComponent {
 
   constructor(
     fb: FormBuilder,
@@ -41,9 +41,11 @@ export class UserLoginComponent  {
   get userName() {
     return this.form.controls.userName;
   }
+
   get password() {
     return this.form.controls.password;
   }
+
   get mobile() {
     return this.form.controls.mobile;
   }
@@ -53,13 +55,13 @@ export class UserLoginComponent  {
 
   submit() {
     this.error = '';
-      this.userName.markAsDirty();
-      this.userName.updateValueAndValidity();
-      this.password.markAsDirty();
-      this.password.updateValueAndValidity();
-      if (this.userName.invalid || this.password.invalid) {
-        return;
-      }
+    this.userName.markAsDirty();
+    this.userName.updateValueAndValidity();
+    this.password.markAsDirty();
+    this.password.updateValueAndValidity();
+    if (this.userName.invalid || this.password.invalid) {
+      return;
+    }
 
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
@@ -75,6 +77,12 @@ export class UserLoginComponent  {
         this.reuseTabService.clear();
         // 设置用户Token信息
         this.tokenService.set({token: res.accessToken});
+        this.settingsService.setUser({
+          name: res.user.displayName || res.user.name,
+          avatar: null,
+          email: res.user.email
+        });
+        
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
           let url = this.tokenService.referrer!.url || '/';
