@@ -71,13 +71,12 @@ export class UserLoginComponent {
         password: this.password.value,
       })
       .subscribe((res: any) => {
-        console.log(res);
-
         // 清空路由复用信息
         this.reuseTabService.clear();
         // 设置用户Token信息
         this.tokenService.set({token: res.accessToken});
         this.settingsService.setUser({
+          id: res.user.id,
           name: res.user.displayName || res.user.name,
           avatar: null,
           email: res.user.email

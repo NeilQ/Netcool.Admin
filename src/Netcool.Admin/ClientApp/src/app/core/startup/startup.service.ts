@@ -1,15 +1,14 @@
 import { Injectable, Injector, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MenuService, SettingsService, TitleService} from '@delon/theme';
+import { MenuService, SettingsService, TitleService, USER } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ACLService } from '@delon/acl';
 
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
+import { zip } from "rxjs";
 
 /**
  * Used for application startup
@@ -35,28 +34,29 @@ export class StartupService {
       this.httpClient.get('assets/tmp/app-data.json')
     ).pipe(
       catchError(([appData]) => {
-          resolve(null);
-          return [appData];
+        resolve(null);
+        return [appData];
       })
     ).subscribe(([appData]) => {
 
-      // Application data
-      const res: any = appData;
-      // Application information: including site name, description, year
-      this.settingService.setApp(res.app);
-      // User information: including name, avatar, email address
-      this.settingService.setUser(res.user);
-      // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
-      this.aclService.setFull(true);
-      // Menu data, https://ng-alain.com/theme/menu
-      this.menuService.add(res.menu);
-      // Can be set page suffix title, https://ng-alain.com/theme/title
-      this.titleService.suffix = res.app.name;
-    },
-    () => { },
-    () => {
-      resolve(null);
-    });
+        // Application data
+        const res: any = appData;
+        // Application information: including site name, description, year
+        this.settingService.setApp(res.app);
+        // User information: including name, avatar, email address
+        this.settingService.setUser(res.user);
+        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
+        this.aclService.setFull(true);
+        // Menu data, https://ng-alain.com/theme/menu
+        this.menuService.add(res.menu);
+        // Can be set page suffix title, https://ng-alain.com/theme/title
+        this.titleService.suffix = res.app.name;
+      },
+      () => {
+      },
+      () => {
+        resolve(null);
+      });
   }
 
   private viaMock(resolve: any, reject: any) {
@@ -92,11 +92,11 @@ export class StartupService {
           {
             text: 'Dashboard',
             link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' }
+            icon: {type: 'icon', value: 'appstore'}
           },
           {
             text: 'Quick Menu',
-            icon: { type: 'icon', value: 'rocket' },
+            icon: {type: 'icon', value: 'rocket'},
             shortcutRoot: true
           }
         ]
@@ -124,6 +124,49 @@ export class StartupService {
       this.settingService.setApp(app);
       this.titleService.suffix = app.name;
 
+      let user = this.settingService.user;
+      this.httpClient.get(`api/users/${user.id}/menus/tree`)
+        .subscribe((tree: any) => {
+            if (tree == null || tree.children == null || tree.children.length == 0) {
+              return;
+            }
+
+            let rootMenu = {
+              text: '导航',
+              group: true,
+              children: []
+            };
+
+            appendChildren(rootMenu, tree.children);
+
+            function appendChildren(parent, items) {
+              if (items == null || items.length == 0) {
+                return;
+              }
+              for (let i = 0; i < items.length; i++) {
+                let item = items[i];
+                let menu = {
+                  group: true,
+                  text: item.displayName,
+                  link: item.route,
+                  icon: {type: 'icon', value: item.icon},
+                  children: []
+                };
+                parent.children.push(menu);
+                if (item.children != null && item.children.length > 0) {
+                  menu.group = false;
+                  appendChildren(menu, item.children)
+                } else {
+                  menu.group = true;
+                }
+              }
+            }
+
+            this.menuService.add([rootMenu]);
+          },
+          error => {
+            console.error(error);
+          })
     });
   }
 }

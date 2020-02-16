@@ -56,7 +56,7 @@ import {DelonAuthConfig} from '@delon/auth';
 export function fnDelonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), {
     login_url: '/passport/login',
-    token_exp_offset: '7200'
+    token_exp_offset: '60'
   });
 }
 
