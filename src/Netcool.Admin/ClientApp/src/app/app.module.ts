@@ -1,5 +1,5 @@
 // tslint:disable: no-duplicate-imports
-import { NgModule, LOCALE_ID, APP_INITIALIZER, Injector } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

@@ -13,7 +13,8 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
-import {DA_SERVICE_TOKEN, ITokenService, JWTInterceptor, SimpleInterceptor} from '@delon/auth';
+import { DA_SERVICE_TOKEN, ITokenService, JWTInterceptor, SimpleInterceptor } from '@delon/auth';
+import { extractHttpError } from "@core/common";
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -34,8 +35,8 @@ const CODEMESSAGE = {
 };
 
 @Injectable()
-export class AuthorizationInterceptor extends JWTInterceptor{
-  constructor(protected injector:Injector) {
+export class AuthorizationInterceptor extends JWTInterceptor {
+  constructor(protected injector: Injector) {
     super(injector);
   }
 
@@ -46,7 +47,8 @@ export class AuthorizationInterceptor extends JWTInterceptor{
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) {
+  }
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -95,14 +97,12 @@ export class DefaultInterceptor implements HttpInterceptor {
         // }
         break;
       case 401:
-        this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
+        // this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
         // 清空 token 信息
         (this.injector.get(DA_SERVICE_TOKEN) as ITokenService).clear();
         this.goTo('/passport/login');
         break;
       case 403:
-      case 404:
-      case 500:
         this.goTo(`/exception/${ev.status}`);
         break;
       default:
@@ -112,7 +112,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
     }
     if (ev instanceof HttpErrorResponse) {
-      return throwError(ev);
+      return extractHttpError(ev);
     } else {
       return of(ev);
     }
@@ -125,7 +125,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       url = environment.SERVER_URL + url;
     }
 
-    const newReq = req.clone({ url });
+    const newReq = req.clone({url});
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理
