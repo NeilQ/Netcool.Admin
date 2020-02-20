@@ -31,6 +31,7 @@
     <None Include="ClientApp\src\app\Models\index.ts" />
     <None Include="ClientApp\src\app\services\crud-rest.service.ts" />
     <None Include="ClientApp\src\app\services\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\user.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

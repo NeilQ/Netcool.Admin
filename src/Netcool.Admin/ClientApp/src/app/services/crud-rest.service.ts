@@ -1,9 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { PagedResult } from '@models';
-import { buildQueryString, extractHttpError } from "@core/common";
+import { buildQueryString } from "@core/common";
 
 @Injectable()
 export abstract class CrudRestServiceBase<T> {

@@ -34,10 +34,10 @@
         "src/environments/*"
       ],
       "@services": [
-        "src/app/services"
+        "src/app/services/index"
       ],
       "@models": [
-        "src/app/models"
+        "src/app/models/index"
       ]
     }
   }
