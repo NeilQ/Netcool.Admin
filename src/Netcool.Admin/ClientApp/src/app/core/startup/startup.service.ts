@@ -74,9 +74,9 @@ export class StartupService {
       this.settingService.setApp(app);
       this.titleService.suffix = app.name;
 
-      this.aclService.setFull(true);
-
       let user = this.settingService.user;
+      this.aclService.setAbility(user.permissionCodes);
+
       this.httpClient.get(`api/users/${user.id}/menus/tree`)
         .subscribe((tree: any) => {
             let rootMenu = {

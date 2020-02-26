@@ -1,6 +1,6 @@
 // tslint:disable: no-duplicate-imports
-import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, LOCALE_ID, APP_INITIALIZER, Optional, Injector, Injectable } from '@angular/core';
+import { HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,9 +37,25 @@ const LANG_PROVIDES = [
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationInterceptor, DefaultInterceptor } from '@core';
 
+@Injectable()
+export abstract class BaseTestInterceptor implements HttpInterceptor {
+  constructor(@Optional() protected injector: Injector) {
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req);
+  }
+}
+
+@Injectable()
+export class TestInterceptor extends BaseTestInterceptor{
+
+}
+
 const INTERCEPTOR_PROVIDES = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true},
-  {provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
+  {provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: TestInterceptor, multi: true}
 ];
 // #endregion
 
@@ -71,6 +87,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
+import { Observable } from "rxjs";
 
 @NgModule({
   declarations: [

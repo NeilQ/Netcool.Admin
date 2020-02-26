@@ -19,4 +19,5 @@ export interface LoginResult {
   user: User;
   accessToken: string;
   expiryAt: Date;
+  permissionCodes: string[]
 }

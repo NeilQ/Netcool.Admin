@@ -77,7 +77,8 @@ export class UserLoginComponent {
           id: res.user.id,
           name: res.user.displayName || res.user.name,
           avatar: null,
-          email: res.user.email
+          email: res.user.email,
+          permissionCodes: res.permissionCodes
         });
 
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
