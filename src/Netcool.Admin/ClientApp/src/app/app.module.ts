@@ -28,8 +28,9 @@ const LANG_PROVIDES = [
 // #endregion
 
 // #region JSON Schema form (using @delon/form)
-// import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
-// const FORM_MODULES = [ JsonSchemaModule ];
+import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
+
+const FORM_MODULES = [JsonSchemaModule];
 // #endregion
 
 
@@ -48,7 +49,7 @@ export abstract class BaseTestInterceptor implements HttpInterceptor {
 }
 
 @Injectable()
-export class TestInterceptor extends BaseTestInterceptor{
+export class TestInterceptor extends BaseTestInterceptor {
 
 }
 
@@ -102,7 +103,7 @@ import { Observable } from "rxjs";
     SharedModule,
     LayoutModule,
     RoutesModule,
-    // ...FORM_MODULES,
+    ...FORM_MODULES,
     ...GLOBAL_THIRD_MODULES
   ],
   providers: [

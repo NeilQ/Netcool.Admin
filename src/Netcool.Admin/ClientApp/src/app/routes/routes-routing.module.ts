@@ -19,11 +19,11 @@ const routes: Routes = [
     component: LayoutDefaultComponent,
     canActivate: [SimpleGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘', titleI18n: 'dashboard' } },
-      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'dashboard', component: DashboardComponent, data: {title: '仪表盘', titleI18n: 'dashboard'}},
+      {path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule)},
       // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+      {path: 'system', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule)},
     ]
   },
   // 全屏布局
@@ -38,13 +38,13 @@ const routes: Routes = [
     path: 'passport',
     component: LayoutPassportComponent,
     children: [
-      { path: 'login', component: UserLoginComponent, data: { title: '登录' } },
-      { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } },
+      {path: 'login', component: UserLoginComponent, data: {title: '登录'}},
+      {path: 'lock', component: UserLockComponent, data: {title: '锁屏'}},
     ]
   },
   // 单页不包裹Layout
-  { path: 'callback/:type', component: CallbackComponent },
-  { path: '**', redirectTo: 'exception/404' },
+  {path: 'callback/:type', component: CallbackComponent},
+  {path: '**', redirectTo: 'exception/404'},
 ];
 
 @NgModule({
@@ -59,4 +59,5 @@ const routes: Routes = [
     )],
   exports: [RouterModule],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {
+}

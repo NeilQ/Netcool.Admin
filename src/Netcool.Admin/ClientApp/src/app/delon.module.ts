@@ -28,8 +28,8 @@ const MOCK_MODULES = !environment.production ? [DelonMockModule.forRoot({data: M
  *  </section>
  *  ```
  */
-import { RouteReuseStrategy } from '@angular/router';
-import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+//import { RouteReuseStrategy } from '@angular/router';
+//import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
 
 const REUSETAB_PROVIDES = [
   // {
@@ -51,14 +51,6 @@ export function fnPageHeaderConfig(): PageHeaderConfig {
   };
 }
 
-import { DelonAuthConfig } from '@delon/auth';
-
-export function fnDelonAuthConfig(): DelonAuthConfig {
-  return Object.assign(new DelonAuthConfig(), {
-    login_url: '/passport/login',
-    token_exp_offset: '60'
-  });
-}
 
 // tslint:disable-next-line: no-duplicate-imports
 import { STConfig } from '@delon/abc';
@@ -70,11 +62,22 @@ export function fnSTConfig(): STConfig {
   };
 }
 
-import { DelonFormConfig } from '@delon/form';
+import {
+  DelonFormConfig,
+} from '@delon/form';
 
 export function fnDelonFormConfig(): DelonFormConfig {
   return Object.assign(new DelonFormConfig(), {
     // values
+  });
+}
+
+import { DelonAuthConfig } from '@delon/auth';
+
+export function fnDelonAuthConfig(): DelonAuthConfig {
+  return Object.assign(new DelonAuthConfig(), {
+    login_url: '/passport/login',
+    token_exp_offset: '60'
   });
 }
 
@@ -90,13 +93,16 @@ export function fnDelonACLConfig(): DelonACLConfig {
   };
 }
 
+
+
+
 const GLOBAL_CONFIG_PROVIDES = [
   // TIPS：@delon/abc 有大量的全局配置信息，例如设置所有 `st` 的页码默认为 `20` 行
   {provide: STConfig, useFactory: fnSTConfig},
   {provide: PageHeaderConfig, useFactory: fnPageHeaderConfig},
   {provide: DelonAuthConfig, useFactory: fnDelonAuthConfig},
   {provide: DelonFormConfig, useFactory: fnDelonFormConfig},
-  {provide: DelonACLConfig, useFactory: fnDelonAuthConfig}
+  {provide: DelonACLConfig, useFactory: fnDelonACLConfig},
 ];
 
 // #endregion

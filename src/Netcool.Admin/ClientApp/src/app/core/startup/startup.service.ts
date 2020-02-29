@@ -105,7 +105,7 @@ export class StartupService {
       let menu = {
         group: true,
         text: item.displayName,
-        link: item.route,
+        link: (parent.link || '') + item.route,
         icon: {type: 'icon', value: item.icon},
         children: []
       };
