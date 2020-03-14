@@ -21,3 +21,11 @@ export interface LoginResult {
   expiryAt: Date;
   permissionCodes: string[]
 }
+
+export class AppConfig {
+  id: number;
+  name: string;
+  value: string;
+  description: string;
+  type: number;
+}

@@ -1,0 +1,5 @@
+
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="search()" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="data" [columns]="columns" [total]="total" [page]="page" (change)="changePage($event)"></st>
+</nz-card>
