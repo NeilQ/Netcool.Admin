@@ -3,6 +3,12 @@
   items: T[]
 }
 
+export class Role{
+  id: number;
+  name: string;
+  notes: string;
+}
+
 export class User {
   id: string;
   name: string;

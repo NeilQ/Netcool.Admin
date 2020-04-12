@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalHelper } from '@delon/theme';
-import { STChange, STColumn, STComponent, STPage } from '@delon/abc';
+import { Component, OnInit } from '@angular/core';
+import { STChange, STColumn, STPage } from '@delon/abc';
 import { SFSchema } from '@delon/form';
-import { AppConfigService } from "../../../services/app-config.service";
+import { AppConfigService } from "@services";
 import { AppConfig } from "@models";
 
 @Component({
@@ -24,21 +23,20 @@ export class SysAppConfigComponent implements OnInit {
   searchSchema: SFSchema = {
     properties: {}
   };
-  @ViewChild('st', {static: false}) st: STComponent;
+
   columns: STColumn[] = [
-    {title: '名称', index: 'name'},
-    {title: '值', index: 'value'},
+    {title: '名称', index: 'name', width: "200px"},
+    {title: '值', index: 'value', width: "200px"},
     {title: '说明', index: 'description'},
   ];
 
-  constructor(private apiService: AppConfigService, private modal: ModalHelper) {
+  constructor(private apiService: AppConfigService) {
   }
 
   loadData() {
     this.apiService.page(this.pageIndex, this.pageSize).subscribe(data => {
       this.data = data.items;
       this.total = data.total;
-      console.log(this.total)
     });
   }
 

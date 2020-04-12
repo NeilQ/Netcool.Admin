@@ -24,6 +24,7 @@ const routes: Routes = [
       {path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule)},
       // 业务子模块
       {path: 'system', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule)},
+      {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
     ]
   },
   // 全屏布局

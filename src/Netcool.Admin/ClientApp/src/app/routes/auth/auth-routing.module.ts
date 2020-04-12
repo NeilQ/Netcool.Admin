@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SysAppConfigComponent } from './app-config/app-config.component';
+import { AuthRoleComponent } from './role/role.component';
 
 const routes: Routes = [
-  {path: 'app-configuration', component: SysAppConfigComponent}
+  {path: 'role', component: AuthRoleComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SysRoutingModule {
+export class AuthRoutingModule {
 }
