@@ -1,9 +1,19 @@
-<page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
+<page-header></page-header>
 <nz-card>
+  <!--
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="data" [columns]="columns" [total]="total" [page]="page" (change)="changePage($event)"></st>
+  -->
+  <div nz-row >
+    <button nz-button (click)="search()" [nzType]="'primary'">
+      <i nz-icon nzType="search"></i>
+      <span>查询</span>
+    </button>
+    <button nz-button (click)="add()" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+  </div>
+
+  <st [data]="data" [columns]="columns" [loading]="loading" [total]="total" [page]="page"
+      (change)="changePage($event)"></st>
 </nz-card>

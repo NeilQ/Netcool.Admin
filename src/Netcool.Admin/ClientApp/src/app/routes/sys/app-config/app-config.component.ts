@@ -3,6 +3,7 @@ import { STChange, STColumn, STPage } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { AppConfigService } from "@services";
 import { AppConfig } from "@models";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-sys-app-config',
@@ -10,18 +11,14 @@ import { AppConfig } from "@models";
 })
 export class SysAppConfigComponent implements OnInit {
   data: AppConfig[] = [];
+  loading: boolean = false;
   total: number = 0;
-
   pageIndex: number = 1;
   pageSize: number = 10;
 
   page: STPage = {
     front: false,
     showSize: true
-  };
-
-  searchSchema: SFSchema = {
-    properties: {}
   };
 
   columns: STColumn[] = [
@@ -34,10 +31,15 @@ export class SysAppConfigComponent implements OnInit {
   }
 
   loadData() {
-    this.apiService.page(this.pageIndex, this.pageSize).subscribe(data => {
-      this.data = data.items;
-      this.total = data.total;
-    });
+    this.loading = true;
+    this.apiService.page(this.pageIndex, this.pageSize)
+      .pipe(tap(() => {
+        this.loading = false;
+      }))
+      .subscribe(data => {
+        this.data = data.items;
+        this.total = data.total;
+      });
   }
 
   search() {

@@ -5,6 +5,7 @@ import { SFSchema } from '@delon/form';
 import { Role } from "@models";
 import { RoleService } from "@services";
 import { AuthRoleEditComponent } from "./edit/edit.component";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-auth-role',
@@ -12,7 +13,7 @@ import { AuthRoleEditComponent } from "./edit/edit.component";
 })
 export class AuthRoleComponent implements OnInit {
   data: Role[] = [];
-
+  loading: boolean = false;
   total: number = 0;
   pageIndex: number = 1;
   pageSize: number = 10;
@@ -20,10 +21,6 @@ export class AuthRoleComponent implements OnInit {
   page: STPage = {
     front: false,
     showSize: true
-  };
-
-  searchSchema: SFSchema = {
-    properties: {}
   };
 
   columns: STColumn[] = [
@@ -46,10 +43,15 @@ export class AuthRoleComponent implements OnInit {
   }
 
   loadData() {
-    this.apiService.page(this.pageIndex, this.pageSize).subscribe(data => {
-      this.data = data.items;
-      this.total = data.total;
-    });
+    this.loading = true;
+    this.apiService.page(this.pageIndex, this.pageSize)
+      .pipe(tap(() => {
+        this.loading = false;
+      }))
+      .subscribe(data => {
+        this.data = data.items;
+        this.total = data.total;
+      });
   }
 
   search() {
