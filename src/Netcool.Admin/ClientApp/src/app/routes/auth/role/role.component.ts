@@ -30,7 +30,7 @@ export class AuthRoleComponent implements OnInit {
     {title: '名称', width: "200px", index: 'name'},
     {title: '备注', index: 'notes'},
     {
-      title: '',
+      title: '操作', width: "200px",
       buttons: [
         {
           text: '编辑',

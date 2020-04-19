@@ -3,14 +3,14 @@
     <nz-tab [nzTitle]="'账户密码登录'">
       <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
       <nz-form-item>
-        <nz-form-control [nzErrorTip]="'Please enter username!'">
+        <nz-form-control nzErrorTip="Please enter username!">
           <nz-input-group nzSize="large" nzPrefixIcon="user">
             <input nz-input formControlName="userName" placeholder="username, mobile or email" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-control nzErrorTip="'Please enter password!'">
+        <nz-form-control nzErrorTip="Please enter password!">
           <nz-input-group nzSize="large" nzPrefixIcon="lock">
             <input nz-input type="password" formControlName="password" placeholder="password" />
           </nz-input-group>

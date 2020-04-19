@@ -72,7 +72,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (ev.status > 0) {
       this.injector.get(_HttpClient).end();
     }
-    this.checkStatus(ev);
+   // this.checkStatus(ev);
     // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
