@@ -4,6 +4,7 @@ import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
 import { RoleService } from "@services";
 import { NotificationService } from "../../../../services/notification.service";
+import { Role } from "@models";
 
 @Component({
   selector: 'app-auth-role-edit',
@@ -12,7 +13,7 @@ import { NotificationService } from "../../../../services/notification.service";
 export class AuthRoleEditComponent implements OnInit {
   title = '角色';
   record: any = {};
-  i: any;
+  entity: any;
   schema: SFSchema = {
     properties: {
       name: {type: 'string', title: '名称', maxLength: 32},
@@ -43,7 +44,9 @@ export class AuthRoleEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.record.id > 0)
-      this.roleService.get(this.record.id).subscribe(role => this.i = role);
+      this.roleService.get(this.record.id).subscribe(role => this.entity = role);
+    else
+      this.entity = new Role();
   }
 
   save(value: any) {

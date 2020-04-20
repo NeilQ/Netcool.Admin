@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalHelper } from '@delon/theme';
 import { STChange, STColumn, STPage } from '@delon/abc';
-import { SFSchema } from '@delon/form';
 import { Role } from "@models";
 import { RoleService } from "@services";
 import { AuthRoleEditComponent } from "./edit/edit.component";
@@ -72,9 +71,10 @@ export class AuthRoleComponent implements OnInit {
   }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    console.log('e')
+    this.modal
+      .createStatic(AuthRoleEditComponent)
+      .subscribe(() => this.loadData());
   }
 
 }
