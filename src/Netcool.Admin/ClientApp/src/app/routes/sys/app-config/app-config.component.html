@@ -1,10 +1,11 @@
 <page-header></page-header>
 <nz-card>
-  <div nz-row >
+  <div nz-row class="mb-2">
     <button nz-button (click)="search()" [nzType]="'primary'">
       <i nz-icon nzType="search"></i>
       <span>查询</span>
     </button>
   </div>
-  <st [data]="data" [loading]="loading" [columns]="columns" [total]="total" [page]="page" (change)="changePage($event)"></st>
+  <st [data]="data" [loading]="loading" [columns]="columns" [total]="total" [page]="page"
+      (change)="changePage($event)"></st>
 </nz-card>

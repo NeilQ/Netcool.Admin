@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { STChange, STColumn, STPage } from '@delon/abc';
-import { SFSchema } from '@delon/form';
 import { AppConfigService } from "@services";
 import { AppConfig } from "@models";
 import { tap } from "rxjs/operators";

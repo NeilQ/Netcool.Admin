@@ -71,7 +71,6 @@ export class AuthRoleComponent implements OnInit {
   }
 
   add() {
-    console.log('e')
     this.modal
       .createStatic(AuthRoleEditComponent)
       .subscribe(() => this.loadData());

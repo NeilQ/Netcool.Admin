@@ -30,7 +30,8 @@
               }
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "src/bootstrap.scss"
             ],
             "scripts": [
               "node_modules/ajv/dist/ajv.bundle.js"
