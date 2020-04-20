@@ -54,15 +54,11 @@ export class AuthRoleEditComponent implements OnInit {
       this.roleService.update(this.record.id, value).subscribe(() => {
         this.notificationService.successMessage("保存成功");
         this.modal.close(true);
-      }, error => {
-        this.notificationService.errorNotification("Error", error)
       });
     } else {
       this.roleService.add(value).subscribe(() => {
         this.notificationService.successMessage("保存成功");
         this.modal.close(true);
-      }, error => {
-        this.notificationService.errorNotification("Error", error);
       });
     }
   }

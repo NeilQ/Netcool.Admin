@@ -15,6 +15,18 @@ export class NotificationService {
     this.message.success(content);
   }
 
+  infoMessage(content?: string) {
+    this.message.success(content);
+  }
+
+  warningMessage(content?: string) {
+    this.message.warning(content);
+  }
+
+  errorMessage(content?: string) {
+
+  }
+
   errorNotification(title: string, content?: string, type?: string) {
     if (type != null && type === 'message') {
       this.message.error(content);

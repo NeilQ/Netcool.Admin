@@ -14,7 +14,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService, JWTInterceptor, SimpleInterceptor } from '@delon/auth';
-import { extractHttpError } from "@core/common";
+import { extractHttpError, extractHttpErrorMessage } from "@core/common";
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -72,7 +72,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (ev.status > 0) {
       this.injector.get(_HttpClient).end();
     }
-   // this.checkStatus(ev);
+    // this.checkStatus(ev);
     // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
@@ -112,7 +112,10 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
     }
     if (ev instanceof HttpErrorResponse) {
-      return extractHttpError(ev);
+      let msg = extractHttpErrorMessage(ev);
+      console.error(msg);
+      this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
+      return throwError(msg);
     } else {
       return of(ev);
     }
