@@ -1,28 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalHelper } from '@delon/theme';
-import { STChange, STColumn, STData, STPage } from '@delon/abc';
-import { Role } from "@models";
+import { STColumn } from '@delon/abc';
 import { RoleService } from "@services";
 import { AuthRoleEditComponent } from "./edit/edit.component";
-import { tap } from "rxjs/operators";
-import { NotificationService } from "../../../services/notification.service";
+import { NotificationService } from "@services";
+import { TableComponentBase } from "@models";
+import { Role } from "@models";
 
 @Component({
   selector: 'app-auth-role',
   templateUrl: './role.component.html',
 })
-export class AuthRoleComponent implements OnInit {
-  data: STData[] = [];
-  loading: boolean = false;
-  total: number = 0;
-  pageIndex: number = 1;
-  pageSize: number = 10;
-  selectedItems: STData[] = [];
-
-  page: STPage = {
-    front: false,
-    showSize: true
-  };
+export class AuthRoleComponent extends TableComponentBase<Role> {
 
   columns: STColumn[] = [
     {title: 'id', index: 'id', type: 'checkbox'},
@@ -42,40 +31,10 @@ export class AuthRoleComponent implements OnInit {
     }
   ];
 
-  constructor(private apiService: RoleService,
+  constructor(protected apiService: RoleService,
               private modal: ModalHelper,
               private notificationService: NotificationService) {
-  }
-
-  loadData() {
-    this.loading = true;
-    this.apiService.page(this.pageIndex, this.pageSize)
-      .pipe(tap(() => {
-        this.loading = false;
-      }))
-      .subscribe(data => {
-        this.data = data.items;
-        this.total = data.total;
-      });
-  }
-
-  search() {
-    this.pageIndex = 1;
-    this.loadData()
-  }
-
-  ngOnInit() {
-    this.loadData();
-  }
-
-  onStChange(e: STChange) {
-    if (e.type == 'pi' || e.type == 'ps') {
-      this.pageIndex = e.pi;
-      this.pageSize = e.ps;
-      this.loadData();
-    } else if (e.type == 'checkbox') {
-      this.selectedItems = e.checkbox;
-    }
+    super(apiService)
   }
 
   add() {
