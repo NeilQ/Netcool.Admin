@@ -114,7 +114,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (ev instanceof HttpErrorResponse) {
       let msg = extractHttpErrorMessage(ev);
       console.error(msg);
-      this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
+      if(ev.status!=401){
+        this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
+      }
       return throwError(msg);
     } else {
       return of(ev);
