@@ -24,7 +24,7 @@ export class NotificationService {
   }
 
   errorMessage(content?: string) {
-
+    this.message.error(content);
   }
 
   errorNotification(title: string, content?: string, type?: string) {

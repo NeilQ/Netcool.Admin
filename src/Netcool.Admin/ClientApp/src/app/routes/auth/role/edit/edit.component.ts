@@ -3,7 +3,7 @@ import { NzModalRef } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
 import { RoleService } from "@services";
-import { NotificationService } from "../../../../services/notification.service";
+import { NotificationService } from "@services";
 import { Role } from "@models";
 
 @Component({
@@ -52,12 +52,10 @@ export class AuthRoleEditComponent implements OnInit {
   save(value: any) {
     if (this.record.id > 0) {
       this.roleService.update(this.record.id, value).subscribe(() => {
-        this.notificationService.successMessage("保存成功");
         this.modal.close(true);
       });
     } else {
       this.roleService.add(value).subscribe(() => {
-        this.notificationService.successMessage("保存成功");
         this.modal.close(true);
       });
     }
