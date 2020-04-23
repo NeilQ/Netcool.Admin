@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
-import { RoleService } from "@services";
+import {  UserService } from "@services";
 import { NotificationService } from "@services";
-import { Role } from "@models";
+import { User } from "@models";
 
 @Component({
-  selector: 'auth-role-edit',
+  selector: 'auth-user-edit',
   templateUrl: './edit.component.html',
 })
-export class AuthRoleEditComponent implements OnInit {
-  title = '角色';
+export class AuthUserEditComponent implements OnInit {
+  title = '用户';
   record: any = {};
   entity: any;
   schema: SFSchema = {
@@ -37,25 +37,25 @@ export class AuthRoleEditComponent implements OnInit {
   constructor(
     private modal: NzModalRef,
     private notificationService: NotificationService,
-    private roleService: RoleService,
+    private apiService: UserService,
     public http: _HttpClient,
   ) {
   }
 
   ngOnInit(): void {
     if (this.record.id > 0)
-      this.roleService.get(this.record.id).subscribe(role => this.entity = role);
+      this.apiService.get(this.record.id).subscribe(role => this.entity = role);
     else
-      this.entity = new Role();
+      this.entity = new User();
   }
 
   save(value: any) {
     if (this.record.id > 0) {
-      this.roleService.update(this.record.id, value).subscribe(() => {
+      this.apiService.update(this.record.id, value).subscribe(() => {
         this.modal.close(true);
       });
     } else {
-      this.roleService.add(value).subscribe(() => {
+      this.apiService.add(value).subscribe(() => {
         this.modal.close(true);
       });
     }

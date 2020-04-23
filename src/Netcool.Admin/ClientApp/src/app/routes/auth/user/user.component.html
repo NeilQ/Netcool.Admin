@@ -1,0 +1,25 @@
+<page-header></page-header>
+<nz-card>
+  <!--
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  -->
+  <div nz-row class="mb-2">
+    <button nz-button (click)="search()" [nzType]="'primary'">
+      <i nz-icon nzType="search"></i>
+      <span>查询</span>
+    </button>
+    <button nz-button (click)="add()" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+
+    <button class="float-right" nz-button (click)="delete()" nzType="danger">
+      <i nz-icon nzType="delete"></i>
+      <span>删除</span>
+    </button>
+
+  </div>
+
+  <st [data]="data" [columns]="columns" [loading]="loading" [total]="total" [page]="page"
+      (change)="onStChange($event)"></st>
+</nz-card>

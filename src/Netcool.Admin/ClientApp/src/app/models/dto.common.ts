@@ -17,6 +17,7 @@ export class User {
   email: string;
   phone: string;
   isActive: string;
+  genderDescription:string;
 
   [key: string]: any
 }

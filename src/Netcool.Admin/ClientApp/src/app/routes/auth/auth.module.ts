@@ -3,12 +3,16 @@ import { SharedModule } from '@shared';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthRoleComponent } from './role/role.component';
 import { AuthRoleEditComponent } from './role/edit/edit.component';
+import { AuthUserComponent } from "./user/user.component";
+import { AuthUserEditComponent } from "./user/edit/edit.component";
 
 const COMPONENTS = [
-  AuthRoleComponent
+  AuthRoleComponent,
+  AuthUserComponent
 ];
 const COMPONENTS_NOROUNT = [
   AuthRoleEditComponent,
+  AuthUserEditComponent
 ];
 
 @NgModule({

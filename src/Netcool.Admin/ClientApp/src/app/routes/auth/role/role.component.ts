@@ -7,7 +7,7 @@ import { CrudTableComponentBase } from "@models";
 import { Role } from "@models";
 
 @Component({
-  selector: 'app-auth-role',
+  selector: 'auth-role',
   templateUrl: './role.component.html',
 })
 export class AuthRoleComponent extends CrudTableComponentBase<Role> {
