@@ -13,8 +13,8 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
-import { DA_SERVICE_TOKEN, ITokenService, JWTInterceptor, SimpleInterceptor } from '@delon/auth';
-import { extractHttpError, extractHttpErrorMessage } from "@core/common";
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { extractHttpErrorMessage } from "@core/common";
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -33,14 +33,6 @@ const CODEMESSAGE = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
-
-@Injectable()
-export class AuthorizationInterceptor extends JWTInterceptor {
-  constructor(protected injector: Injector) {
-    super(injector);
-  }
-
-}
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
@@ -114,7 +106,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (ev instanceof HttpErrorResponse) {
       let msg = extractHttpErrorMessage(ev);
       console.error(msg);
-      if(ev.status!=401){
+      if (ev.status != 401) {
         this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
       }
       return throwError(msg);

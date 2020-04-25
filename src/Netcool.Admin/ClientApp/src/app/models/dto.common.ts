@@ -18,10 +18,10 @@ export class User {
   id: string;
   name: string;
   displayName: string;
-  gender: string;
+  gender: number = 1;
   email: string;
   phone: string;
-  isActive: string;
+  isActive: boolean = true;
   genderDescription: string;
 
   [key: string]: any

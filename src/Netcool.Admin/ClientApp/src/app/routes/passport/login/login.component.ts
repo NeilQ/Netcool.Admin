@@ -1,4 +1,4 @@
-import { SettingsService, _HttpClient } from '@delon/theme';
+import { SettingsService } from '@delon/theme';
 import { Component, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
 import { StartupService } from '@core';
 import { UserService } from "@services";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'passport-login',
@@ -27,7 +28,7 @@ export class UserLoginComponent {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private startupSrv: StartupService,
     private userService: UserService,
-    public http: _HttpClient,
+    public http: HttpClient,
     public msg: NzMessageService,
   ) {
     this.form = fb.group({

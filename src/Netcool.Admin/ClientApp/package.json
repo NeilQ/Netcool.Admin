@@ -22,6 +22,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "9.1.3",
+    "@angular/cdk": "^9.2.1",
     "@angular/common": "9.1.3",
     "@angular/compiler": "9.1.3",
     "@angular/core": "9.1.3",
@@ -30,6 +31,7 @@
     "@angular/platform-browser-dynamic": "9.1.3",
     "@angular/platform-server": "9.1.3",
     "@angular/router": "9.1.3",
+    "@ant-design/icons-angular": "^9.0.1",
     "@delon/abc": "^9.0.0-rc.4",
     "@delon/acl": "^9.0.0-rc.4",
     "@delon/auth": "^9.0.0-rc.4",
@@ -44,6 +46,7 @@
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^3.3.3",
+    "date-fns": "^2.12.0",
     "jquery": "3.4.1",
     "ng-zorro-antd": "^9.0.2",
     "oidc-client": "^1.9.1",

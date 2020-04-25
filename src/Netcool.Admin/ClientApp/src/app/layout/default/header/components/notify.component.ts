@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import { NzMessageService } from 'ng-zorro-antd';
 import { NoticeItem, NoticeIconList } from '@delon/abc';
 
@@ -57,10 +56,6 @@ export class HeaderNotifyComponent {
 
     notices.forEach(item => {
       const newItem = { ...item };
-      if (newItem.datetime)
-        newItem.datetime = distanceInWordsToNow(item.datetime!, {
-          locale: (window as any).__locale__,
-        });
       if (newItem.extra && newItem.status) {
         newItem.color = {
           todo: undefined,

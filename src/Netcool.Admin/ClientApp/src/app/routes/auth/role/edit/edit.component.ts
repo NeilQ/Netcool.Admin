@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
 import { RoleService } from "@services";
 import { NotificationService } from "@services";
@@ -25,21 +24,13 @@ export class AuthRoleEditComponent implements OnInit {
     '*': {
       spanLabelFixed: 100,
       grid: {span: 12},
-    },
-    $name: {
-      widget: 'string'
-    },
-    $notes: {
-      widget: 'string',
     }
   };
 
   constructor(
     private modal: NzModalRef,
     private notificationService: NotificationService,
-    private roleService: RoleService,
-    public http: _HttpClient,
-  ) {
+    private roleService: RoleService) {
   }
 
   ngOnInit(): void {

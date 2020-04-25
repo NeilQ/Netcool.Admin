@@ -1,6 +1,6 @@
 // tslint:disable: no-duplicate-imports
-import { NgModule, LOCALE_ID, APP_INITIALIZER, Optional, Injector, Injectable } from '@angular/core';
-import { HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { NgModule, LOCALE_ID, APP_INITIALIZER  } from '@angular/core';
+import { HttpClientModule  } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,18 +17,18 @@ const LANG = {
   delon: delonLang,
 };
 // register angular
-import { registerLocaleData } from '@angular/common';
+//import { registerLocaleData } from '@angular/common';
+//registerLocaleData(LANG.ng, LANG.abbr);
 
-registerLocaleData(LANG.ng, LANG.abbr);
 const LANG_PROVIDES = [
   {provide: LOCALE_ID, useValue: LANG.abbr},
   {provide: NZ_I18N, useValue: LANG.zorro},
-  {provide: DELON_LOCALE, useValue: LANG.delon},
+  {provide: DELON_LOCALE, useValue: LANG.delon}
 ];
 // #endregion
 
 // #region JSON Schema form (using @delon/form)
-import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
+import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 
 const FORM_MODULES = [JsonSchemaModule];
 // #endregion
@@ -36,27 +36,12 @@ const FORM_MODULES = [JsonSchemaModule];
 
 // #region Http Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthorizationInterceptor, DefaultInterceptor } from '@core';
+import {  DefaultInterceptor } from '@core';
 
-@Injectable()
-export abstract class BaseTestInterceptor implements HttpInterceptor {
-  constructor(@Optional() protected injector: Injector) {
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req);
-  }
-}
-
-@Injectable()
-export class TestInterceptor extends BaseTestInterceptor {
-
-}
 
 const INTERCEPTOR_PROVIDES = [
-  {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true},
-  {provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},
-  {provide: HTTP_INTERCEPTORS, useClass: TestInterceptor, multi: true}
+  {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
 ];
 // #endregion
 
@@ -65,7 +50,7 @@ const GLOBAL_THIRD_MODULES = [];
 // #endregion
 
 // #region Startup Service
-import { StartupService } from './core/startup/startup.service';
+import { StartupService } from '@core';
 
 export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
@@ -83,12 +68,12 @@ const APPINIT_PROVIDES = [
 // #endregion
 
 import { DelonModule } from './delon.module';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
+import { CoreModule } from '@core/core.module';
+import { SharedModule } from '@shared';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
-import { Observable } from "rxjs";
+import { JWTInterceptor } from "@delon/auth";
 
 @NgModule({
   declarations: [
