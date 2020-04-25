@@ -11,11 +11,12 @@ import { CrudTableComponentBase, User } from "@models";
 })
 export class AuthUserComponent extends CrudTableComponentBase<User> {
 
+  editComponent = AuthUserEditComponent;
+
   constructor(protected apiService: UserService,
               protected modal: ModalHelper,
               protected notificationService: NotificationService) {
     super(apiService, modal, notificationService);
-    this.editComponent = AuthUserEditComponent;
     this.columns = [
       {title: 'id', index: 'id', type: 'checkbox'},
       {title: '名称', width: "200px", index: 'name'},
@@ -24,15 +25,20 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
       {title: '邮箱', width: "200px", index: 'email'},
       {title: '性别', width: "80px", index: 'genderDescription'},
       {
-        title: '是否启用', width: "80px", index: 'isActive',
-        type: 'badge',
+        title: '是否启用', width: "80px", index: 'isActive', type: 'badge',
         badge: {
           true: {text: '启用', color: 'success'},
           false: {text: '禁用', color: 'default'},
         },
       },
       {
-        title: '操作', width: "200px", buttons: this.buttons
+        title: '操作', width: "200px", buttons: [
+          {
+            text: '编辑', icon: 'edit', type: 'modal',
+            modal: {component: this.editComponent, params: (record) => Object},
+            click: () => this.onSaveSuccess()
+          },
+        ]
       }
     ];
   }

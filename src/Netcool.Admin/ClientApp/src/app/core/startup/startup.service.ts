@@ -9,6 +9,7 @@ import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
 import { zip } from "rxjs";
+import { EnumService } from "@services";
 
 /**
  * Used for application startup
@@ -19,6 +20,7 @@ export class StartupService {
   constructor(
     iconSrv: NzIconService,
     private menuService: MenuService,
+    private enumService:EnumService,
     private settingService: SettingsService,
     private aclService: ACLService,
     private titleService: TitleService,
@@ -67,12 +69,15 @@ export class StartupService {
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
       // this.viaMock(resolve, reject);
 
+
       const app: any = {
         name: `Netcool.Admin`,
         description: `Netcool.Admin front-end.`
       };
       this.settingService.setApp(app);
       this.titleService.suffix = app.name;
+
+      this.enumService.loadEnums();
 
       let user = this.settingService.user;
       this.aclService.setAbility(user.permissionCodes);

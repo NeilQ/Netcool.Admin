@@ -3,7 +3,12 @@
   items: T[]
 }
 
-export class Role{
+export class NameValue<T> {
+  name: string;
+  value: T;
+}
+
+export class Role {
   id: number;
   name: string;
   notes: string;
@@ -17,7 +22,7 @@ export class User {
   email: string;
   phone: string;
   isActive: string;
-  genderDescription:string;
+  genderDescription: string;
 
   [key: string]: any
 }

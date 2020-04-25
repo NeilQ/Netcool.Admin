@@ -38,11 +38,6 @@ export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDes
    */
   columns: STColumn[] = [];
 
-  /*
-   * 行按钮组配置
-   */
-  buttons: STColumnButton[] = [];
-
   constructor(protected apiService: CrudRestServiceBase<TEntity>) {
   }
 
@@ -126,15 +121,10 @@ export abstract class CrudTableComponentBase<TEntity = any> extends TableCompone
               protected modal: ModalHelper,
               protected notificationService: NotificationService) {
     super(apiService);
-    this.buttons = [
-      {
-        text: '编辑',
-        icon: 'edit',
-        type: 'modal',
-        modal: {component: AuthRoleEditComponent, params: (record) => Object},
-        click: () => this.onSaveSuccess()
-      },
-    ]
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
   }
 
   add() {
