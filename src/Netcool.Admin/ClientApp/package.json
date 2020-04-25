@@ -75,7 +75,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "less-bundle-promise": "^1.0.7",
     "lint-staged": "^8.2.1",
-    "ng-alain": "^8.8.0",
+    "ng-alain": "^9.0.0-rc.4",
     "ng-alain-codelyzer": "^0.0.1",
     "prettier": "^1.18.2",
     "prettier-stylelint": "^0.4.2",
