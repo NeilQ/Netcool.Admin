@@ -24,6 +24,8 @@ export class User {
   isActive: boolean = true;
   genderDescription: string;
 
+  roles: Role[]
+
   [key: string]: any
 }
 

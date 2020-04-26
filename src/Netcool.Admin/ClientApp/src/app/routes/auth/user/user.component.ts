@@ -20,8 +20,8 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
     super(apiService, modal, notificationService);
     this.columns = [
       {title: 'id', index: 'id', type: 'checkbox'},
-      {title: '名称', width: "200px", index: 'name'},
-      {title: '昵称', width: "200px", index: 'displayName'},
+      {title: '名称', width: "120px", index: 'name'},
+      {title: '昵称', width: "120px", index: 'displayName'},
       {title: '电话', width: "200px", index: 'phone'},
       {title: '邮箱', width: "200px", index: 'email'},
       {title: '性别', width: "80px", index: 'genderDescription'},
@@ -32,6 +32,7 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
           false: {text: '禁用', color: 'default'},
         },
       },
+      {title: '角色', width: "200px", index: 'roles', format: item => item.roles.map(t => (t.name)).join(', ')},
       {
         title: '操作', width: "200px", buttons: [
           {

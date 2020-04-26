@@ -46,7 +46,7 @@ export class AuthUserEditComponent implements OnInit {
     private modal: NzModalRef,
     private notificationService: NotificationService,
     private enumService: EnumService,
-    private apiService: UserService,) {
+    private apiService: UserService) {
   }
 
   ngOnInit(): void {
