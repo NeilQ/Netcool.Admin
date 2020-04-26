@@ -1,5 +1,5 @@
 ﻿import { CrudRestServiceBase } from "./crud-rest.service";
-import { LoginResult, User } from "@models";
+import { LoginResult, Role, User } from "@models";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -14,5 +14,13 @@ export class UserService extends CrudRestServiceBase<User> {
 
   login(body: { name: string, password: string }): Observable<LoginResult> {
     return this.http.post<LoginResult>("api/account/authenticate?_allow_anonymous=true", body);
+  }
+
+  getRoles(id: number): Observable<Role[]> {
+    return this.http.get<Role[]>(`api/users/${id}/roles`)
+  }
+
+  setRoles(id: number, roleIds: number[]): Observable<any> {
+    return this.http.post(`api/users/${id}/roles`, roleIds || [])
   }
 }
