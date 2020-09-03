@@ -67,13 +67,13 @@ const APPINIT_PROVIDES = [
 ];
 // #endregion
 
-import { DelonModule } from './delon.module';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import { JWTInterceptor } from "@delon/auth";
+import { GlobalConfigModule } from "./global-config.module";
 
 @NgModule({
   declarations: [
@@ -83,7 +83,7 @@ import { JWTInterceptor } from "@delon/auth";
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    DelonModule.forRoot(),
+    GlobalConfigModule.forRoot(),
     CoreModule,
     SharedModule,
     LayoutModule,

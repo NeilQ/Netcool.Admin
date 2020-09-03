@@ -30,8 +30,8 @@ export class AuthUserEditComponent implements OnInit {
         },
         enum: this.enumService.getEnum('gender').map(t => ({label: t.name, value: t.value}))
       },
-      email: {type: 'string', title: '邮箱', maxLength: 256},
-      phone: {type: 'string', title: '电话', maxLength: 64},
+      email: {type: 'string', title: '邮箱', maxLength: 256, format: 'email'},
+      phone: {type: 'string', title: '电话', maxLength: 64, format: 'mobile'},
     },
     required: ['name', 'gender'],
   };
