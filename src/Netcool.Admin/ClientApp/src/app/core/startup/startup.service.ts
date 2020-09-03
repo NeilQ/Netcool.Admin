@@ -51,7 +51,7 @@ export class StartupService {
         // Menu data, https://ng-alain.com/theme/menu
         this.menuService.add(res.menu);
         // Can be set page suffix title, https://ng-alain.com/theme/title
-        this.titleService.suffix = res.app.name;
+        this.titleService.prefix = res.app.name;
       },
       () => {
       },
@@ -75,7 +75,7 @@ export class StartupService {
         description: `Netcool.Admin front-end.`
       };
       this.settingService.setApp(app);
-      this.titleService.suffix = app.name;
+      this.titleService.prefix = app.name;
 
       this.enumService.loadEnums();
 
