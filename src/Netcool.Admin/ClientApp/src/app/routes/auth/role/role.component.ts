@@ -6,6 +6,7 @@ import { NotificationService } from "@services";
 import { CrudTableComponentBase } from "@models";
 import { Role } from "@models";
 import { STColumn } from "@delon/abc";
+import { AuthRoleSetPermissionsComponent } from "./set-permissions/set-permissions.component";
 
 @Component({
   selector: 'auth-role',
@@ -31,6 +32,10 @@ export class AuthRoleComponent extends CrudTableComponentBase<Role> {
             text: '编辑', icon: 'edit', type: 'modal',
             modal: {component: this.editComponent, params: (record) => Object},
             click: () => this.onSaveSuccess()
+          },
+          {
+            text: '设置权限', icon: 'setting', type: 'modal',
+            modal: {component: AuthRoleSetPermissionsComponent, params: (record) => Object}
           },
         ]
       }

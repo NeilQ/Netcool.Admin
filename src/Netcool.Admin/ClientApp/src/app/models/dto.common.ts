@@ -43,3 +43,36 @@ export class AppConfig {
   description: string;
   type: number;
 }
+
+export class Menu {
+  id: number;
+  parentId: number;
+  name: string;
+  displayName: string;
+  type: number;
+  route: string;
+  icon: string;
+  level: number;
+  order: number;
+  path: string;
+  notes: string;
+  permissions: Permission[]
+
+  [key: string]: any;
+}
+
+export class Permission {
+  id: number;
+  menuId: number;
+  name: number;
+  code: number;
+  notes: string;
+  type: number;
+
+  [key: string]: any;
+}
+
+export enum PermissionType {
+  Menu,
+  Function
+}
