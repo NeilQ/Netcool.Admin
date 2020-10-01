@@ -5,6 +5,7 @@ import { AuthUserEditComponent } from "./edit/edit.component";
 import { NotificationService } from "@services";
 import { CrudTableComponentBase, User } from "@models";
 import { AuthUserRoleEditComponent } from "./edit-role/edit-role.component";
+import { AuthUserResetPasswordComponent } from "./reset-password/reset-password.component";
 
 @Component({
   selector: 'auth-user',
@@ -44,6 +45,10 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
             text: '角色', icon: 'edit', type: 'modal',
             modal: {component: AuthUserRoleEditComponent, params: (record) => Object},
             click: () => this.onSaveSuccess()
+          },
+          {
+            text: '重置密码', icon: 'edit', type: 'modal',
+            modal: {component: AuthUserResetPasswordComponent, params: (record) => Object}
           },
         ]
       }

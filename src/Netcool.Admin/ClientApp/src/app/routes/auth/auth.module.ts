@@ -7,6 +7,7 @@ import { AuthUserComponent } from "./user/user.component";
 import { AuthUserEditComponent } from "./user/edit/edit.component";
 import { AuthUserRoleEditComponent } from "./user/edit-role/edit-role.component";
 import { AuthRoleSetPermissionsComponent } from './role/set-permissions/set-permissions.component';
+import { AuthUserResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 const COMPONENTS = [
   AuthRoleComponent,
@@ -17,7 +18,8 @@ const COMPONENTS_NOROUNT = [
   AuthUserEditComponent,
   AuthUserRoleEditComponent,
   AuthRoleSetPermissionsComponent
-];
+,
+  AuthUserResetPasswordComponent];
 
 @NgModule({
   imports: [

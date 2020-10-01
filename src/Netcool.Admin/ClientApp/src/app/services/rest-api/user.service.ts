@@ -23,4 +23,8 @@ export class UserService extends CrudRestServiceBase<User> {
   setRoles(id: number, roleIds: number[]): Observable<any> {
     return this.http.post(`api/users/${id}/roles`, roleIds || [])
   }
+
+  resetPassword(id: number, newPassword: string, confirmPassword: string): Observable<any> {
+    return this.http.post(`api/users/${id}/password/reset`, {new: newPassword, confirm: confirmPassword});
+  }
 }
