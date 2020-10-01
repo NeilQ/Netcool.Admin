@@ -2,7 +2,7 @@
   <div class="modal-title">{{title}}</div>
 </div>
 <nz-spin *ngIf="!entity" class="modal-spin"></nz-spin>
-<sf *ngIf="entity" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="entity" button="none">
+<sf *ngIf="entity" #sf mode="edit" [schema]="schema" [formData]="entity" button="none">
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
     <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid">保存

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema, SFUISchema } from '@delon/form';
+import { SFSchema } from '@delon/form';
 import { RoleService } from "@services";
 import { NotificationService } from "@services";
 import { Role } from "@models";
@@ -19,12 +19,6 @@ export class AuthRoleEditComponent implements OnInit {
       notes: {type: 'string', title: '备注', maxLength: 256},
     },
     required: ['name'],
-  };
-  ui: SFUISchema = {
-    '*': {
-      spanLabelFixed: 100,
-      grid: {span: 12},
-    }
   };
 
   constructor(

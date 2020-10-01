@@ -11,6 +11,12 @@ import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 
 const alainConfig: AlainConfig = {
   st: {modal: {size: 'lg'}},
+  sf: {
+    ui: {
+      spanLabelFixed: 100,
+      grid: {span: 12},
+    } as SFUISchemaItem
+  },
   pageHeader: {homeI18n: 'home'},
   auth: {
     login_url: '/passport/login',
@@ -27,8 +33,9 @@ const alainConfig: AlainConfig = {
 // mock
 import { environment } from '@env/environment';
 import * as MOCK_DATA from '../../_mock';
+
 if (!environment.production) {
-  alainConfig.mock = { data: MOCK_DATA };
+  alainConfig.mock = {data: MOCK_DATA};
 }
 
 const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];
@@ -67,6 +74,7 @@ const alainProvides = [
 // #region NG-ZORRO Config
 
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
+import { SFUISchemaItem } from "@delon/form";
 
 const ngZorroConfig: NzConfig = {};
 

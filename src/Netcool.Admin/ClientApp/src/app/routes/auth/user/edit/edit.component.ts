@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema, SFUISchema } from '@delon/form';
+import { SFSchema } from '@delon/form';
 import { EnumService, UserService } from "@services";
 import { NotificationService } from "@services";
 import { User } from "@models";
@@ -34,12 +34,6 @@ export class AuthUserEditComponent implements OnInit {
       phone: {type: 'string', title: '电话', maxLength: 64, format: 'mobile'},
     },
     required: ['name', 'gender'],
-  };
-  ui: SFUISchema = {
-    '*': {
-      spanLabelFixed: 100,
-      grid: {span: 12},
-    }
   };
 
   constructor(
