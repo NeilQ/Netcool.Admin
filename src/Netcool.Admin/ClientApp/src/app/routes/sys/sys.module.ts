@@ -4,7 +4,8 @@ import { SysRoutingModule } from './sys-routing.module';
 import { SysAppConfigComponent } from './app-config/app-config.component';
 
 const COMPONENTS = [
-  SysAppConfigComponent];
+  SysAppConfigComponent
+];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
@@ -18,4 +19,5 @@ const COMPONENTS_NOROUNT = [];
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
-export class SysModule { }
+export class SysModule {
+}

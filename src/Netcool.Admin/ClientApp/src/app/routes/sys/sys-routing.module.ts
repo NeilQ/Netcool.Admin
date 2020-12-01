@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SysAppConfigComponent } from './app-config/app-config.component';
 
 const routes: Routes = [
-  {path: 'app-configuration', component: SysAppConfigComponent}
+  {path: 'app-configuration', component: SysAppConfigComponent},
 ];
 
 @NgModule({
