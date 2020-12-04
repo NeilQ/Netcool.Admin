@@ -72,7 +72,7 @@ export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDes
             this.total = 0;
           }
         })
-    }, 100);
+    }, 10);
   }
 
   /*

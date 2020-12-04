@@ -22,7 +22,7 @@ export class AuthMenuComponent implements OnInit {
     {title: '权限名称', index: 'name'},
     {title: '权限代码', index: 'code'},
     {title: '类型', index: 'typeDescription'},
-    {title: '描述',  index: 'notes'},
+    {title: '描述', index: 'notes'},
     {
       title: '',
       buttons: [
@@ -40,51 +40,52 @@ export class AuthMenuComponent implements OnInit {
   }
 
   loadTree() {
-    this.menuService.list({sort: "level,order"}).subscribe(data => {
-      let root = {
-        title: '全部菜单',
-        key: 'root',
-        expanded: true,
-        children: [],
-        isLeaf: false,
-      };
-      let map = new Map<number, NzTreeNodeOptions>();
-      data.forEach((value, i) => {
-        if (value.parentId == null || value.parentId <= 0) {
-          let node = {
-            title: value.displayName,
-            key: value.id.toString(),
-            expanded: true,
-            children: [],
-            isLeaf: true,
-            data: value
+    this.menuService.list({sort: "level,order"})
+      .subscribe(data => {
+        let root = {
+          title: '全部菜单',
+          key: 'root',
+          expanded: true,
+          children: [],
+          isLeaf: false,
+        };
+        let map = new Map<number, NzTreeNodeOptions>();
+        data.forEach((value) => {
+          if (value.parentId == null || value.parentId <= 0) {
+            let node = {
+              title: value.displayName,
+              key: value.id.toString(),
+              expanded: true,
+              children: [],
+              isLeaf: true,
+              data: value
+            }
+            map.set(value.id, node);
+            root.children.push(node);
+          } else {
+            let node = {
+              title: value.displayName,
+              key: value.id.toString(),
+              expanded: true,
+              children: [],
+              isLeaf: true,
+              icon: value.icon,
+              data: value
+            }
+            let parentNode = map.get(value.parentId);
+            if (parentNode != null) {
+              parentNode.isLeaf = false;
+              parentNode.children.push(node);
+            }
+            map.set(value.id, node);
           }
-          map.set(value.id, node);
-          root.children.push(node);
-        } else {
-          let node = {
-            title: value.displayName,
-            key: value.id.toString(),
-            expanded: true,
-            children: [],
-            isLeaf: true,
-            icon: value.icon,
-            data: value
-          }
-          let parentNode = map.get(value.parentId);
-          if (parentNode != null) {
-            parentNode.isLeaf = false;
-            parentNode.children.push(node);
-          }
-          map.set(value.id, node);
+        });
+        this.nodes = [root];
+        if (root.children.length > 0) {
+          this.nzSelectedKeys = [root.children[0].key];
+          this.showInfo(root.children[0].data);
         }
-      });
-      this.nodes = [root];
-      if (root.children.length > 0) {
-        this.nzSelectedKeys = [root.children[0].key];
-        this.showInfo(root.children[0].data);
-      }
-    })
+      })
   }
 
   activeNode(data: NzFormatEmitEvent) {
