@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent, STPage } from '@delon/abc/st';
-import { SFSchema } from '@delon/form';
+import { STColumn, STComponent } from '@delon/abc/st';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from "ng-zorro-antd";
 import { MenuService } from "@services";
 import { Menu } from "@models";
@@ -22,15 +20,8 @@ export class AuthMenuComponent implements OnInit {
     {title: '权限名称', index: 'name'},
     {title: '权限代码', index: 'code'},
     {title: '类型', index: 'typeDescription'},
-    {title: '描述', index: 'notes'},
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
-  ];
+    {title: '描述', index: 'notes'}
+ ];
 
   constructor(private menuService: MenuService) {
   }
