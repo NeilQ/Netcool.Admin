@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { SFSchema } from '@delon/form';
-import { NotificationService, UserService } from "@services";
+import {Component, OnInit} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd/modal';
+import {SFSchema} from '@delon/form';
+import {NotificationService, UserService} from "@services";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-auth-user-reset-password',
@@ -31,7 +32,11 @@ export class AuthUserResetPasswordComponent implements OnInit {
 
   save(value: any) {
     if (!this.record) return;
+    this.submitting = true;
     this.apiService.resetPassword(this.record.id, value.new, value.confirm)
+      .pipe(finalize(() => {
+        this.submitting = false;
+      }))
       .subscribe(() => {
         this.notificationService.successMessage('保存成功');
         this.modal.close(true);

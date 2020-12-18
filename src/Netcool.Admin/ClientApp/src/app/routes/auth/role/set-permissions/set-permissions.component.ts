@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from "ng-zorro-antd";
-import { MenuService, NotificationService, RoleService } from "@services";
-import { PermissionType } from "@models";
-import { finalize } from "rxjs/operators";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd/modal';
+import {NzTreeComponent, NzTreeNode, NzTreeNodeOptions} from "ng-zorro-antd";
+import {MenuService, NotificationService, RoleService} from "@services";
+import {PermissionType} from "@models";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-auth-role-set-permissions',
@@ -87,6 +87,8 @@ export class AuthRoleSetPermissionsComponent implements OnInit {
         });
         this.source = [...tempSource];
         this.loadSelectedNode();
+      }, error => {
+        this.loading = false;
       })
   }
 
@@ -96,6 +98,7 @@ export class AuthRoleSetPermissionsComponent implements OnInit {
     }
 
     this.roleService.getPermissions(this.record.id)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((permissions) => {
         if (permissions == null) permissions = [];
         const authIdsMap = new Set<number>();
@@ -106,8 +109,6 @@ export class AuthRoleSetPermissionsComponent implements OnInit {
         this.tree.getTreeNodes().forEach((node) => {
           this.selectRecursive(node, authIdsMap);
         });
-
-        this.loading = false;
       });
   }
 
@@ -116,6 +117,7 @@ export class AuthRoleSetPermissionsComponent implements OnInit {
       return;
     }
 
+    this.submitting=true;
     let tempPermissionIds: number[] = [];
 
     this.tree.getTreeNodes().forEach(node => {

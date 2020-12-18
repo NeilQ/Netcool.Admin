@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
-import { AppConfigService, RoleService } from "@services";
-import { NotificationService } from "@services";
-import { Role } from "@models";
+import {Component, OnInit} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd';
+import {SFSchema} from '@delon/form';
+import {AppConfigService, RoleService} from "@services";
+import {NotificationService} from "@services";
+import {Role} from "@models";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'sys-app-config-edit',
@@ -21,6 +22,7 @@ export class SysAppConfigEditComponent implements OnInit {
     },
     required: ['name', 'value'],
   };
+  submitting = false;
 
   constructor(
     private modal: NzModalRef,
@@ -36,14 +38,19 @@ export class SysAppConfigEditComponent implements OnInit {
   }
 
   save(value: any) {
+    this.submitting = true;
     if (this.record.id > 0) {
-      this.appConfigService.update(this.record.id, value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.appConfigService.update(this.record.id, value)
+        .pipe(finalize(() => this.submitting = false))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     } else {
-      this.appConfigService.add(value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.appConfigService.add(value)
+        .pipe(finalize(() => this.submitting = false))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     }
   }
 

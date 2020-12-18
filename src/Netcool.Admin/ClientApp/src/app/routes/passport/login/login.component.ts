@@ -1,13 +1,14 @@
-import { SettingsService } from '@delon/theme';
-import { Component, Inject, Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
-import { StartupService } from '@core';
-import { UserService } from "@services";
-import { HttpClient } from "@angular/common/http";
+import {SettingsService} from '@delon/theme';
+import {Component, Inject, Optional} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {ITokenService, DA_SERVICE_TOKEN} from '@delon/auth';
+import {ReuseTabService} from '@delon/abc';
+import {StartupService} from '@core';
+import {UserService} from "@services";
+import {HttpClient} from "@angular/common/http";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'passport-login',
@@ -16,6 +17,8 @@ import { HttpClient } from "@angular/common/http";
   providers: [],
 })
 export class UserLoginComponent {
+
+  loading = false;
 
   constructor(
     fb: FormBuilder,
@@ -66,9 +69,13 @@ export class UserLoginComponent {
       return;
     }
 
+    this.loading = true;
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.userService.login({name: this.userName.value, password: this.password.value})
+      .pipe(finalize(() => {
+        this.loading = false;
+      }))
       .subscribe((res) => {
         // 清空路由复用信息
         this.reuseTabService.clear();

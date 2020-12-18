@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
-import { RoleService } from "@services";
-import { NotificationService } from "@services";
-import { Role } from "@models";
+import {Component, OnInit} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd';
+import {SFSchema} from '@delon/form';
+import {RoleService} from "@services";
+import {NotificationService} from "@services";
+import {Role} from "@models";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'auth-role-edit',
@@ -20,6 +21,7 @@ export class AuthRoleEditComponent implements OnInit {
     },
     required: ['name'],
   };
+  submitting = false;
 
   constructor(
     private modal: NzModalRef,
@@ -35,14 +37,19 @@ export class AuthRoleEditComponent implements OnInit {
   }
 
   save(value: any) {
+    this.submitting = true;
     if (this.record.id > 0) {
-      this.roleService.update(this.record.id, value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.roleService.update(this.record.id, value)
+        .pipe(finalize(() => this.submitting = false))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     } else {
-      this.roleService.add(value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.roleService.add(value)
+        .pipe(finalize(() => this.submitting = false))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     }
   }
 

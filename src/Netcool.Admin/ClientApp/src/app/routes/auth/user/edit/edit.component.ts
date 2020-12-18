@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
-import { EnumService, UserService } from "@services";
-import { NotificationService } from "@services";
-import { User } from "@models";
+import {Component, OnInit} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd';
+import {SFSchema} from '@delon/form';
+import {EnumService, UserService} from "@services";
+import {NotificationService} from "@services";
+import {User} from "@models";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'auth-user-edit',
@@ -36,6 +37,8 @@ export class AuthUserEditComponent implements OnInit {
     required: ['name', 'gender'],
   };
 
+  submitting = false;
+
   constructor(
     private modal: NzModalRef,
     private notificationService: NotificationService,
@@ -51,14 +54,23 @@ export class AuthUserEditComponent implements OnInit {
   }
 
   save(value: any) {
+    this.submitting = true;
     if (this.record.id > 0) {
-      this.apiService.update(this.record.id, value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.apiService.update(this.record.id, value)
+        .pipe(finalize(() => {
+          this.submitting = false;
+        }))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     } else {
-      this.apiService.add(value).subscribe(() => {
-        this.modal.close(true);
-      });
+      this.apiService.add(value)
+        .pipe(finalize(() => {
+          this.submitting = false;
+        }))
+        .subscribe(() => {
+          this.modal.close(true);
+        });
     }
   }
 

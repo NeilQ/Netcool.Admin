@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd';
-import { SFSchema, SFSchemaEnumType, SFTransferWidgetSchema, SFUISchema } from '@delon/form';
-import { EnumService, RoleService, UserService } from "@services";
-import { NotificationService } from "@services";
-import { Role } from "@models";
-import { map, tap } from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {NzModalRef} from 'ng-zorro-antd';
+import {SFSchema, SFSchemaEnumType, SFTransferWidgetSchema, SFUISchema} from '@delon/form';
+import {EnumService, RoleService, UserService} from "@services";
+import {NotificationService} from "@services";
+import {Role} from "@models";
+import {finalize, map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'auth-user-role-edit',
@@ -41,6 +41,8 @@ export class AuthUserRoleEditComponent implements OnInit {
     }
   };
 
+  submitting = false;
+
   constructor(
     private modal: NzModalRef,
     private notificationService: NotificationService,
@@ -53,8 +55,8 @@ export class AuthUserRoleEditComponent implements OnInit {
     if (this.record && this.record.id > 0) {
       this.loading = true;
       this.apiService.getRoles(this.record.id)
-        .pipe(tap(() => {
-          this.loading = false
+        .pipe(finalize(() => {
+          this.loading = false;
         }))
         .subscribe(roles => {
           if (roles) {
@@ -67,10 +69,15 @@ export class AuthUserRoleEditComponent implements OnInit {
   }
 
   save(value: any) {
-    let roleIds = value.roleIds || []
-    this.apiService.setRoles(this.record.id, roleIds).subscribe(() => {
-      this.modal.close(true);
-    });
+    let roleIds = value.roleIds || [];
+    this.submitting = true;
+    this.apiService.setRoles(this.record.id, roleIds)
+      .pipe(finalize(() => {
+        this.submitting = false;
+      }))
+      .subscribe(() => {
+        this.modal.close(true);
+      });
   }
 
   close() {

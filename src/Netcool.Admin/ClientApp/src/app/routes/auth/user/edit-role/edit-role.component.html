@@ -5,7 +5,8 @@
 <sf *ngIf="!loading" #sf mode="edit" [schema]="schema" [ui]="ui" button="none">
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid">保存
+    <button nz-button [nzLoading]="submitting" type="submit" nzType="primary" (click)="save(sf.value)"
+            [disabled]="!sf.valid">保存
     </button>
   </div>
 </sf>
