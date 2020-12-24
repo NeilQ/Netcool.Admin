@@ -1,11 +1,11 @@
-﻿import { OnDestroy, OnInit } from "@angular/core";
-import { STChange, STColumn, STColumnButton, STData, STPage } from "@delon/abc";
-import { CrudRestServiceBase, NotificationService } from "@services";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
-import { PagedResult } from "./dto.common";
-import { ModalHelper } from "@delon/theme";
-import { AuthRoleEditComponent } from "../routes/auth/role/edit/edit.component";
+﻿import {OnDestroy, OnInit} from "@angular/core";
+import {STChange, STColumn, STData, STPage} from "@delon/abc";
+import {CrudRestServiceBase, NotificationService} from "@services";
+import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
+import {PagedResult} from "./dto.common";
+import {ModalHelper} from "@delon/theme";
+import {deepCopy} from "@delon/util";
 
 export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDestroy {
 
@@ -78,8 +78,9 @@ export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDes
   /*
    * 页码值为1并加载数据
    */
-  search() {
+  search(query: any) {
     this.pageIndex = 1;
+    this.query = deepCopy(query);
     this.loadLazy();
   }
 
