@@ -78,7 +78,7 @@ export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDes
   /*
    * 页码值为1并加载数据
    */
-  search(query: any) {
+  search(query: any = null) {
     this.pageIndex = 1;
     this.query = deepCopy(query);
     this.loadLazy();

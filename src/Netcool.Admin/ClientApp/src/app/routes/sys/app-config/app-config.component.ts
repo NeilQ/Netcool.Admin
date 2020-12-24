@@ -4,6 +4,7 @@ import { AppConfig, CrudTableComponentBase } from "@models";
 import { SysAppConfigEditComponent } from "./edit/edit.component";
 import { ModalHelper } from "@delon/theme";
 import { STColumnTag } from "@delon/abc";
+import {SFSchema} from "@delon/form";
 
 const TAG: STColumnTag = {
   true: {text: '系统初始化', color: 'green'},
@@ -16,6 +17,11 @@ const TAG: STColumnTag = {
 })
 export class SysAppConfigComponent extends CrudTableComponentBase<AppConfig> {
 
+  searchSchema: SFSchema = {
+    properties: {
+      name: {type: 'string', title: '账号名称', maxLength: 32},
+    }
+  };
 
   constructor(protected apiService: AppConfigService,
               protected modal: ModalHelper,
