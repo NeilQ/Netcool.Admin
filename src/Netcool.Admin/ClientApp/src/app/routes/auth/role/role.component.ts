@@ -7,6 +7,7 @@ import { CrudTableComponentBase } from "@models";
 import { Role } from "@models";
 import { STColumn } from "@delon/abc";
 import { AuthRoleSetPermissionsComponent } from "./set-permissions/set-permissions.component";
+import {SFSchema} from "@delon/form";
 
 @Component({
   selector: 'auth-role',
@@ -15,6 +16,12 @@ import { AuthRoleSetPermissionsComponent } from "./set-permissions/set-permissio
 export class AuthRoleComponent extends CrudTableComponentBase<Role> {
 
   editComponent = AuthRoleEditComponent;
+
+  searchSchema: SFSchema = {
+    properties: {
+      name: {type: 'string', title: '账号名称', maxLength: 32},
+    }
+  };
 
   constructor(protected apiService: RoleService,
               protected modal: ModalHelper,
