@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { AppConfigService, NotificationService } from "@services";
-import { AppConfig, CrudTableComponentBase } from "@models";
-import { SysAppConfigEditComponent } from "./edit/edit.component";
-import { ModalHelper } from "@delon/theme";
-import { STColumnTag } from "@delon/abc";
+import {Component} from '@angular/core';
+import {AppConfigService, NotificationService} from "@services";
+import {AppConfig, CrudTableComponentBase} from "@models";
+import {SysAppConfigEditComponent} from "./edit/edit.component";
+import {ModalHelper} from "@delon/theme";
+import {STColumnTag} from "@delon/abc";
 import {SFSchema} from "@delon/form";
 
 const TAG: STColumnTag = {
@@ -40,6 +40,7 @@ export class SysAppConfigComponent extends CrudTableComponentBase<AppConfig> {
           {
             text: "编辑", icon: "edit", type: "modal",
             modal: {component: this.editComponent, params: (record) => Object},
+            acl: this.permissions.configUpdate,
             click: () => this.onSaveSuccess()
           }
         ]

@@ -9,12 +9,12 @@
       <span>查询</span>
     </button>
     -->
-    <button nz-button (click)="add()" [nzType]="'primary'">
+    <button nz-button (click)="add()" [nzType]="'primary'" [acl]="permissions.userCreate">
       <i nz-icon nzType="plus"></i>
       <span>新建</span>
     </button>
 
-    <button class="float-right" nz-button (click)="delete()" nzType="danger">
+    <button class="float-right" nz-button (click)="delete()" nzType="danger" [acl]="permissions.userDelete">
       <i nz-icon nzType="delete"></i>
       <span>删除</span>
     </button>

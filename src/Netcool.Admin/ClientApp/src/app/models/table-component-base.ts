@@ -5,10 +5,12 @@ import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {PagedResult} from "./dto.common";
 import {ModalHelper} from "@delon/theme";
+import {Permissions} from "./permissions";
 import {deepCopy} from "@delon/util";
 
 export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDestroy {
 
+  permissions: Permissions = Permissions.Instance;
   data: STData[] = [];
   loading: boolean = false;
   total: number = 0;

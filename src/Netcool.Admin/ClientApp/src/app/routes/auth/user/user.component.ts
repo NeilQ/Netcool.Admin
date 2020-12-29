@@ -60,15 +60,18 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
           {
             text: '编辑', icon: 'edit', type: 'modal',
             modal: {component: this.editComponent, params: () => Object},
+            acl: this.permissions.userUpdate,
             click: () => this.onSaveSuccess()
           },
           {
             text: '角色', icon: 'edit', type: 'modal',
             modal: {component: AuthUserRoleEditComponent, params: () => Object},
+            acl: this.permissions.userSetRoles,
             click: () => this.onSaveSuccess()
           },
           {
             text: '重置密码', icon: 'edit', type: 'modal',
+            acl: this.permissions.userUpdate,
             modal: {component: AuthUserResetPasswordComponent, params: () => Object}
           },
         ]

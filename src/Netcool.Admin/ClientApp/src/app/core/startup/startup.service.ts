@@ -80,6 +80,7 @@ export class StartupService {
       this.enumService.loadEnums();
 
       let user = this.settingService.user;
+      this.aclService.setFull(false)
       this.aclService.setAbility(user.permissionCodes);
 
       this.httpClient.get(`api/users/${user.id}/menus/tree`)

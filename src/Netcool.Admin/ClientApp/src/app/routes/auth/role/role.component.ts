@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { ModalHelper } from '@delon/theme';
-import { RoleService } from "@services";
-import { AuthRoleEditComponent } from "./edit/edit.component";
-import { NotificationService } from "@services";
-import { CrudTableComponentBase } from "@models";
-import { Role } from "@models";
-import { STColumn } from "@delon/abc";
-import { AuthRoleSetPermissionsComponent } from "./set-permissions/set-permissions.component";
+import {Component} from '@angular/core';
+import {ModalHelper} from '@delon/theme';
+import {RoleService} from "@services";
+import {AuthRoleEditComponent} from "./edit/edit.component";
+import {NotificationService} from "@services";
+import {CrudTableComponentBase} from "@models";
+import {Role} from "@models";
+import {STColumn} from "@delon/abc";
+import {AuthRoleSetPermissionsComponent} from "./set-permissions/set-permissions.component";
 import {SFSchema} from "@delon/form";
 
 @Component({
@@ -38,10 +38,12 @@ export class AuthRoleComponent extends CrudTableComponentBase<Role> {
           {
             text: '编辑', icon: 'edit', type: 'modal',
             modal: {component: this.editComponent, params: (record) => Object},
+            acl: this.permissions.roleUpdate,
             click: () => this.onSaveSuccess()
           },
           {
             text: '设置权限', icon: 'setting', type: 'modal',
+            acl: this.permissions.roleSetPermissions,
             modal: {component: AuthRoleSetPermissionsComponent, params: (record) => Object}
           },
         ]
