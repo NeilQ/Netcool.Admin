@@ -1,4 +1,4 @@
-﻿import {OnDestroy, OnInit} from "@angular/core";
+﻿import { OnDestroy, OnInit, Directive } from "@angular/core";
 import {STChange, STColumn, STData, STPage} from "@delon/abc";
 import {CrudRestServiceBase, NotificationService} from "@services";
 import {Observable} from "rxjs";
@@ -8,6 +8,7 @@ import {ModalHelper} from "@delon/theme";
 import {Permissions} from "./permissions";
 import {deepCopy} from "@delon/util";
 
+@Directive()
 export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDestroy {
 
   permissions: Permissions = Permissions.Instance;
@@ -108,6 +109,7 @@ export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDes
   }
 }
 
+@Directive()
 export abstract class CrudTableComponentBase<TEntity = any> extends TableComponentBase<TEntity> implements OnInit, OnDestroy {
 
   /*
