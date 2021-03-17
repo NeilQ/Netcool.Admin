@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ModalHelper } from '@delon/theme';
-import { EnumService, UserService } from "@services";
+import { EnumService, OrganizationService, UserService } from "@services";
 import { AuthUserEditComponent } from "./edit/edit.component";
 import { NotificationService } from "@services";
 import { CrudTableComponentBase, User } from "@models";
 import { AuthUserRoleEditComponent } from "./edit-role/edit-role.component";
 import { AuthUserResetPasswordComponent } from "./reset-password/reset-password.component";
-import { SFSchema } from "@delon/form";
+import { SFSchema, SFTreeSelectWidgetSchema } from "@delon/form";
 
 @Component({
   selector: 'auth-user',
@@ -32,11 +32,22 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
       },
       email: {type: 'string', title: '邮箱', maxLength: 256, format: 'email'},
       phone: {type: 'string', title: '电话', maxLength: 64, format: 'phone'},
+      organizationId: {
+        type: 'number', title: '组织',
+        ui: {
+          width: 250,
+          allowClear: true,
+          widget: 'tree-select',
+          asyncData: () => this.orgService.getTreeEnumOptions(),
+          defaultExpandAll: true,
+        } as SFTreeSelectWidgetSchema,
+      }
     },
   };
 
   constructor(protected apiService: UserService,
               private enumService: EnumService,
+              private orgService: OrganizationService,
               protected modal: ModalHelper,
               protected notificationService: NotificationService) {
     super(apiService, modal, notificationService);
@@ -44,6 +55,12 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
       {title: 'id', index: 'id', type: 'checkbox'},
       {title: '名称', width: "120px", index: 'name'},
       {title: '昵称', width: "120px", index: 'displayName'},
+      {
+        title: '组织',
+        width: "120px",
+        index: 'organization',
+        format: item => item.organization == null ? "" : item.organization.name
+      },
       {title: '电话', width: "200px", index: 'phone'},
       {title: '邮箱', width: "200px", index: 'email'},
       {title: '性别', width: "80px", index: 'genderDescription'},

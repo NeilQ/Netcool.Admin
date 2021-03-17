@@ -21,6 +21,7 @@ export class SysOrganizationComponent implements OnInit {
   currentOrganization: Organization;
 
   isDeleting = false;
+  isLoading = false;
 
   constructor(private organizationService: OrganizationService,
               private modalService: NzModalService,
@@ -42,7 +43,7 @@ export class SysOrganizationComponent implements OnInit {
   }
 
   delete() {
-    this.isDeleting=true;
+    this.isDeleting = true;
     this.organizationService.delete([this.currentOrganization.id])
       .pipe(finalize(() => this.isDeleting = false))
       .subscribe(() => {
@@ -77,7 +78,9 @@ export class SysOrganizationComponent implements OnInit {
   }
 
   loadTree() {
+    this.isLoading = true;
     this.organizationService.list({sort: "depth,id"})
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe(data => {
         let root = {
           title: '全部组织',
@@ -125,10 +128,9 @@ export class SysOrganizationComponent implements OnInit {
           if (this.currentOrganization != null) {
             this.nzSelectedKeys = [this.currentOrganization.id.toString()];
             this.showInfo(this.currentOrganization);
-          } else {
-            this.nzSelectedKeys = [root.children[0].key];
-            this.showInfo(root.children[0].data);
           }
+        } else {
+          this.currentOrganization = null;
         }
       })
   }

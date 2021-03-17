@@ -10,7 +10,7 @@
   <div nz-col [nzSpan]="6">
     <nz-card class="card-menu" nzTitle="菜单">
       <div nz-row class="mb-2">
-        <button nz-button nzType="primary" class="tree-button" (click)="loadTree()">
+        <button nz-button nzType="primary" class="tree-button" (click)="loadTree()" [nzLoading]="isLoading">
           <i nz-icon nzType="reload"></i>
         </button>
       </div>

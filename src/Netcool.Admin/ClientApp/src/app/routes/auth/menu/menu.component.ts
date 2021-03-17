@@ -3,6 +3,7 @@ import { STColumn, STComponent } from '@delon/abc/st';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from "ng-zorro-antd/tree";
 import { MenuService } from "@services";
 import { Menu } from "@models";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'auth-menu',
@@ -15,13 +16,15 @@ export class AuthMenuComponent implements OnInit {
   nzSelectedKeys = [];
   currentMenu: Menu;
 
+  isLoading = false;
+
   @ViewChild('st', {static: false}) st: STComponent;
   columns: STColumn[] = [
     {title: '权限名称', index: 'name'},
     {title: '权限代码', index: 'code'},
     {title: '类型', index: 'typeDescription'},
     {title: '描述', index: 'notes'}
- ];
+  ];
 
   constructor(private menuService: MenuService) {
   }
@@ -31,7 +34,9 @@ export class AuthMenuComponent implements OnInit {
   }
 
   loadTree() {
+    this.isLoading = true;
     this.menuService.list({sort: "level,order"})
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe(data => {
         let root = {
           title: '全部菜单',
