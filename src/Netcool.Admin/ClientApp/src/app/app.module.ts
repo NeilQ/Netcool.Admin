@@ -11,7 +11,7 @@ import { NZ_I18N, en_US as zorroLang } from 'ng-zorro-antd/i18n';
 import { DELON_LOCALE, en_US as delonLang } from '@delon/theme';
 
 const LANG = {
-  abbr: 'zh',
+  abbr: 'en',
   ng: ngLang,
   zorro: zorroLang,
   delon: delonLang,
