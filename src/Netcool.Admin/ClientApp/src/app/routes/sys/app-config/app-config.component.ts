@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {AppConfigService, NotificationService} from "@services";
-import {AppConfig, CrudTableComponentBase} from "@models";
-import {SysAppConfigEditComponent} from "./edit/edit.component";
-import {ModalHelper} from "@delon/theme";
-import {STColumnTag} from "@delon/abc";
-import {SFSchema} from "@delon/form";
+import { Component } from '@angular/core';
+import { AppConfigService, NotificationService } from "@services";
+import { AppConfig, CrudTableComponentBase } from "@models";
+import { SysAppConfigEditComponent } from "./edit/edit.component";
+import { ModalHelper } from "@delon/theme";
+import { STColumnTag } from "@delon/abc/st";
+import { SFSchema } from "@delon/form";
 
 const TAG: STColumnTag = {
   true: {text: '系统初始化', color: 'green'},

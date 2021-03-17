@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {ModalHelper} from '@delon/theme';
-import {RoleService} from "@services";
-import {AuthRoleEditComponent} from "./edit/edit.component";
-import {NotificationService} from "@services";
-import {CrudTableComponentBase} from "@models";
-import {Role} from "@models";
-import {STColumn} from "@delon/abc";
-import {AuthRoleSetPermissionsComponent} from "./set-permissions/set-permissions.component";
-import {SFSchema} from "@delon/form";
+import { Component } from '@angular/core';
+import { ModalHelper } from '@delon/theme';
+import { RoleService } from "@services";
+import { AuthRoleEditComponent } from "./edit/edit.component";
+import { NotificationService } from "@services";
+import { CrudTableComponentBase } from "@models";
+import { Role } from "@models";
+import { AuthRoleSetPermissionsComponent } from "./set-permissions/set-permissions.component";
+import { SFSchema } from "@delon/form";
+import { STColumn } from "@delon/abc/st";
 
 @Component({
   selector: 'auth-role',

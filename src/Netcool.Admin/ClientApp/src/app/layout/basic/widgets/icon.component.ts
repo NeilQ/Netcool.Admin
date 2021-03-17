@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 @Component({
   selector: 'header-icon',
@@ -16,7 +16,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
     <nz-dropdown-menu #iconMenu="nzDropdownMenu">
       <div nz-menu class="wd-xl animated jello">
         <nz-spin [nzSpinning]="loading" [nzTip]="'正在读取数据...'">
-          <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'" class="app-icons">
+          <div nz-row [nzJustify]="'center'" [nzAlign]="'middle'" class="app-icons">
             <div nz-col [nzSpan]="6">
               <i nz-icon nzType="calendar" class="bg-error text-white"></i>
               <small>Calendar</small>
@@ -61,7 +61,7 @@ export class HeaderIconComponent {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  change() {
+  change(): void {
     setTimeout(() => {
       this.loading = false;
       this.cdr.detectChanges();

@@ -1,5 +1,5 @@
 ﻿import { CrudRestServiceBase } from "./crud-rest.service";
-import { Menu, Role, } from "@models";
+import { Menu } from "@models";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 

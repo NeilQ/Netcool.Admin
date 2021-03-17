@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NzMessageService, NzModalService, NzNotificationService } from "ng-zorro-antd";
+import { NzMessageService } from "ng-zorro-antd/message";
+import { NzModalService } from "ng-zorro-antd/modal";
+import { NzNotificationService } from "ng-zorro-antd/notification";
 
 @Injectable({
   providedIn: 'root'

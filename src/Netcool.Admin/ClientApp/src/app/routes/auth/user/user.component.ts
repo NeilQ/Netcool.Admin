@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {ModalHelper} from '@delon/theme';
-import {EnumService, UserService} from "@services";
-import {AuthUserEditComponent} from "./edit/edit.component";
-import {NotificationService} from "@services";
-import {CrudTableComponentBase, User} from "@models";
-import {AuthUserRoleEditComponent} from "./edit-role/edit-role.component";
-import {AuthUserResetPasswordComponent} from "./reset-password/reset-password.component";
-import {SFSchema} from "@delon/form";
+import { Component } from '@angular/core';
+import { ModalHelper } from '@delon/theme';
+import { EnumService, UserService } from "@services";
+import { AuthUserEditComponent } from "./edit/edit.component";
+import { NotificationService } from "@services";
+import { CrudTableComponentBase, User } from "@models";
+import { AuthUserRoleEditComponent } from "./edit-role/edit-role.component";
+import { AuthUserResetPasswordComponent } from "./reset-password/reset-password.component";
+import { SFSchema } from "@delon/form";
 
 @Component({
   selector: 'auth-user',

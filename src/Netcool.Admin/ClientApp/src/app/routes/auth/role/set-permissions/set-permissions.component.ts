@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NzModalRef} from 'ng-zorro-antd/modal';
-import {NzTreeComponent, NzTreeNode, NzTreeNodeOptions} from "ng-zorro-antd";
-import {MenuService, NotificationService, RoleService} from "@services";
-import {PermissionType} from "@models";
-import {finalize} from "rxjs/operators";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from "ng-zorro-antd/tree";
+import { MenuService, NotificationService, RoleService } from "@services";
+import { PermissionType } from "@models";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-auth-role-set-permissions',
@@ -117,7 +117,7 @@ export class AuthRoleSetPermissionsComponent implements OnInit {
       return;
     }
 
-    this.submitting=true;
+    this.submitting = true;
     let tempPermissionIds: number[] = [];
 
     this.tree.getTreeNodes().forEach(node => {
