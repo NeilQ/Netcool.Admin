@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {NzModalRef} from 'ng-zorro-antd';
-import {SFSchema} from '@delon/form';
-import {AppConfigService, RoleService} from "@services";
-import {NotificationService} from "@services";
-import {Role} from "@models";
-import {finalize} from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { SFSchema } from '@delon/form';
+import { AppConfigService, RoleService } from "@services";
+import { NotificationService } from "@services";
+import { Role } from "@models";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'sys-app-config-edit',

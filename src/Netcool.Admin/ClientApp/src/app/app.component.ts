@@ -1,8 +1,10 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { VERSION as VERSION_ALAIN, TitleService } from '@delon/theme';
-import { VERSION as VERSION_ZORRO, NzModalService } from 'ng-zorro-antd';
+import { TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',

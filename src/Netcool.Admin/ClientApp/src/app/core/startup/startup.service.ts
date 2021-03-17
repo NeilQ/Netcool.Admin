@@ -1,7 +1,7 @@
 import { Injectable, Injector, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { MenuService, SettingsService, TitleService } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ACLService } from '@delon/acl';
 
@@ -10,6 +10,8 @@ import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
 import { zip } from "rxjs";
 import { EnumService } from "@services";
+import { TranslateService } from "@ngx-translate/core";
+import { I18NService } from "@core/i18n/i18n.service";
 
 /**
  * Used for application startup
@@ -25,8 +27,9 @@ export class StartupService {
     private aclService: ACLService,
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private translate: TranslateService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private httpClient: HttpClient,
-    private injector: Injector
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
@@ -74,6 +77,7 @@ export class StartupService {
         name: `Netcool.Admin`,
         description: `Netcool.Admin front-end.`
       };
+      this.translate.setDefaultLang(this.i18n.defaultLang);
       this.settingService.setApp(app);
       this.titleService.prefix = app.name;
 

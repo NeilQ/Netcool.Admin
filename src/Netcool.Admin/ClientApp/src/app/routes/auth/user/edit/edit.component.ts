@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {NzModalRef} from 'ng-zorro-antd';
-import {SFSchema} from '@delon/form';
-import {EnumService, UserService} from "@services";
-import {NotificationService} from "@services";
-import {User} from "@models";
-import {finalize} from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { SFSchema } from '@delon/form';
+import { EnumService, UserService } from "@services";
+import { NotificationService } from "@services";
+import { User } from "@models";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'auth-user-edit',

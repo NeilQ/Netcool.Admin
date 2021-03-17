@@ -1,12 +1,12 @@
 ﻿import { OnDestroy, OnInit, Directive } from "@angular/core";
-import {STChange, STColumn, STData, STPage} from "@delon/abc";
-import {CrudRestServiceBase, NotificationService} from "@services";
-import {Observable} from "rxjs";
-import {tap} from "rxjs/operators";
-import {PagedResult} from "./dto.common";
-import {ModalHelper} from "@delon/theme";
-import {Permissions} from "./permissions";
-import {deepCopy} from "@delon/util";
+import { CrudRestServiceBase, NotificationService } from "@services";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
+import { PagedResult } from "./dto.common";
+import { ModalHelper } from "@delon/theme";
+import { Permissions } from "./permissions";
+import { deepCopy } from "@delon/util";
+import { STChange, STColumn, STData, STPage } from "@delon/abc/st";
 
 @Directive()
 export abstract class TableComponentBase<TEntity = any> implements OnInit, OnDestroy {

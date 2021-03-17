@@ -24,8 +24,10 @@ const alainConfig: AlainConfig = {
   },
   acl: {
     preCan: (roleOrAbility: ACLCanType) => {
-      const str = roleOrAbility.toString();
-      return {ability: [str]}
+      if (roleOrAbility != null) {
+        const str = roleOrAbility.toString();
+        return {ability: [str]}
+      } else return {ability: [""]};
     }
   },
 };
@@ -75,6 +77,7 @@ const alainProvides = [
 
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { SFUISchemaItem } from "@delon/form";
+import { Role } from "@models";
 
 const ngZorroConfig: NzConfig = {};
 
