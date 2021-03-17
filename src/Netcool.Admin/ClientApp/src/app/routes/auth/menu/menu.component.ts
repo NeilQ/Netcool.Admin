@@ -88,7 +88,6 @@ export class AuthMenuComponent implements OnInit {
   }
 
   showInfo(menu: Menu) {
-    console.log(menu)
     this.currentMenu = menu
   }
 

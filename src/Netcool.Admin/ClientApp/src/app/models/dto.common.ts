@@ -8,6 +8,16 @@ export class NameValue<T> {
   value: T;
 }
 
+export class Organization{
+  id: number;
+  name: string;
+  description: string;
+  parentId: number;
+  path: string;
+  depth: number;
+  parent: Organization;
+}
+
 export class Role {
   id: number;
   name: string;

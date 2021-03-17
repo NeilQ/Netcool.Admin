@@ -3,11 +3,14 @@ import { SharedModule } from '@shared';
 import { SysRoutingModule } from './sys-routing.module';
 import { SysAppConfigComponent } from './app-config/app-config.component';
 import { SysAppConfigEditComponent } from "./app-config/edit/edit.component";
+import { SysOrganizationComponent } from './organization/organization.component';
+import { SysOrganizationEditComponent } from './organization/edit/edit.component';
 
 const COMPONENTS = [
-  SysAppConfigComponent
-];
-const COMPONENTS_NOROUNT = [SysAppConfigEditComponent];
+  SysAppConfigComponent,
+  SysOrganizationComponent,
+  SysOrganizationEditComponent];
+const COMPONENTS_NOROUNT = [SysAppConfigEditComponent, SysOrganizationEditComponent];
 
 @NgModule({
   imports: [

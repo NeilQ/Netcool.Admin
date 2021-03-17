@@ -5,13 +5,26 @@
     -->
   </ng-template>
 </page-header>
-
 <div nz-row>
   <div nz-col [nzSpan]="6">
-    <nz-card class="card-menu" nzTitle="菜单">
+    <nz-card class="card-organization" nzTitle="组织">
       <div nz-row class="mb-2">
         <button nz-button nzType="primary" class="tree-button" (click)="loadTree()">
           <i nz-icon nzType="reload"></i>
+        </button>
+        <button nz-button nzType="primary" class="tree-button" (click)="onAdd()">
+          <i nz-icon nzType="plus"></i>
+        </button>
+        <button nz-button nzType="primary" class="tree-button" (click)="onEdit()">
+          <i nz-icon nzType="edit"></i>
+        </button>
+        <button nz-button nzDanger nzType="primary" class="tree-button"
+                nz-popconfirm
+                nzPopconfirmTitle="删除该组织的同时将删除其下所有子组织，确定删除吗？"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delete()"
+                [nzLoading]="isDeleting">
+          <i nz-icon nzType="delete"></i>
         </button>
       </div>
       <nz-tree #tree nzShowLine
@@ -22,8 +35,8 @@
                [nzSelectedKeys]="nzSelectedKeys"
                [nzExpandedIcon]="iconTpl"></nz-tree>
       <ng-template #iconTpl let-node let-origin="origin">
-        <i *ngIf="node.key=='root'" nz-icon nzType="folder"></i>
-        <i *ngIf="node.key!='root'" nz-icon [nzType]="origin.data.icon"></i>
+        <i *ngIf="node.key=='root'" nz-icon nzType="apartment"></i>
+        <i *ngIf="node.key!='root'" nz-icon nzType="folder"></i>
       </ng-template>
       <ng-template #nzTreeTemplate let-node>
       <span class="node-custom">
@@ -37,21 +50,12 @@
   </div>
 
   <div nz-col [nzSpan]="18">
-    <nz-card class="card-menu-info" nzTitle="详情">
-      <sv-container *ngIf="this.currentMenu" labelWidth="150">
-        <sv label="名称">{{this.currentMenu.name}}</sv>
-        <sv label="显示名称">{{this.currentMenu.displayName}}</sv>
-        <sv label="类型">{{this.currentMenu.typeDescription}}</sv>
-        <sv label="路由">{{this.currentMenu.route}} </sv>
-        <sv label="图标">{{this.currentMenu.icon}}</sv>
-        <sv label="排序">{{this.currentMenu.order}}</sv>
-        <sv label="备注">{{this.currentMenu.notes}}</sv>
+    <nz-card class="card-organization-info" nzTitle="详情">
+      <sv-container *ngIf="this.currentOrganization" labelWidth="150">
+        <sv label="名称">{{this.currentOrganization.name}}</sv>
+        <sv label="描述">{{this.currentOrganization.description}}</sv>
+        <sv label="深度">{{this.currentOrganization.depth}}</sv>
       </sv-container>
-
-      <st class="mt-5" *ngIf="this.currentMenu" #st [data]="this.currentMenu.permissions" [columns]="columns"
-          [page]="{show:false}"></st>
-
     </nz-card>
   </div>
 </div>
-

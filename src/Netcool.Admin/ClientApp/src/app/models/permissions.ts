@@ -22,5 +22,9 @@
   configUpdate = "config.update";
   configDelete = "config.delete";
 
+  organizationCreate = "organization.create";
+  organizationUpdate = "organization.update";
+  organizationDelete = "organization.delete";
+
 }
 
