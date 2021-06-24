@@ -8,7 +8,7 @@ export class NameValue<T> {
   value: T;
 }
 
-export class Organization{
+export class Organization {
   id: number;
   name: string;
   description: string;
@@ -85,4 +85,13 @@ export class Permission {
 export enum PermissionType {
   Menu,
   Function
+}
+
+export class Announcement {
+  title: string;
+  body: string;
+  status: number;
+  notifyTargetType: number;
+  statusDescription: string;
+  notifyTargetTypeDescription: string;
 }

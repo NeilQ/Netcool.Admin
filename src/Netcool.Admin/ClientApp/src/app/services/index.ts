@@ -6,3 +6,4 @@ export * from './rest-api/app-config.service';
 export * from './rest-api/enum.service';
 export * from './rest-api/menu.service';
 export * from './rest-api/organization.service';
+export * from './rest-api/announcement.service';
