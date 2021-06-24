@@ -17,7 +17,7 @@ const alainConfig: AlainConfig = {
       grid: {span: 12},
     } as SFUISchemaItem
   },
-  pageHeader: {homeI18n: 'home'},
+  pageHeader: {home: ''},
   auth: {
     login_url: '/passport/login',
     token_exp_offset: 60
