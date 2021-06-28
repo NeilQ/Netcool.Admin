@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   HttpInterceptor,
@@ -107,8 +107,13 @@ export class DefaultInterceptor implements HttpInterceptor {
       let msg = extractHttpErrorMessage(ev);
       console.error(msg);
       if (ev.status != 401) {
-        this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
+        if (isDevMode()) {
+          this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
+        } else {
+          this.notification.error('错误', msg);
+        }
       }
+
       return throwError(msg);
     } else {
       return of(ev);
