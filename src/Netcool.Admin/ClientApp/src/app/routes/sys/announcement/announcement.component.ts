@@ -15,7 +15,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
   searchSchema: SFSchema = {
     properties: {
       title: {type: 'string', title: '标题', maxLength: 32},
-      gender: {
+      status: {
         type: 'number', title: '状态',
         ui: {
           widget: 'select',
