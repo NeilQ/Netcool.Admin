@@ -5,6 +5,7 @@ import { ModalHelper } from '@delon/theme';
 import { Announcement, CrudTableComponentBase } from "@models";
 import { AnnouncementService, EnumService, NotificationService } from "@services";
 import { SysAnnouncementEditComponent } from "./edit/edit.component";
+import { publish } from "rxjs/operators";
 
 @Component({
   selector: 'sys-announcement',
@@ -48,11 +49,27 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
             modal: {component: this.editComponent, params: (record) => Object, modalOptions: {nzKeyboard: false}},
             acl: this.permissions.configUpdate,
             click: () => this.onSaveSuccess()
+          },
+          {
+            text: "发布",
+            pop: {
+              title: '确定要发布该公告吗？',
+              okType: 'danger'
+            }, click: (record) => {
+              this.publish(record.id)
+            },
           }
         ]
       }
     ];
+
   }
 
+  publish(id: number) {
+    this.apiService.publish(id).subscribe(() => {
+      this.notificationService.successMessage("发布成功");
+      this.loadLazy();
+    })
+  }
 
 }
