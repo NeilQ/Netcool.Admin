@@ -4,6 +4,7 @@ import { SFSchema } from '@delon/form';
 import { ModalHelper } from '@delon/theme';
 import { Announcement, CrudTableComponentBase } from "@models";
 import { AnnouncementService, EnumService, NotificationService } from "@services";
+import { SysAnnouncementEditComponent } from "./edit/edit.component";
 
 @Component({
   selector: 'sys-announcement',
@@ -33,6 +34,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
               protected notificationService: NotificationService,
               private enumService: EnumService) {
     super(apiService, modal, notificationService)
+    this.editComponent = SysAnnouncementEditComponent;
     this.columns = [
       {title: "id", index: "id", type: "checkbox"},
       {title: '标题', index: 'title'},
@@ -43,7 +45,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
         buttons: [
           {
             text: "编辑", icon: "edit", type: "modal",
-            modal: {component: this.editComponent, params: (record) => Object},
+            modal: {component: this.editComponent, params: (record) => Object, modalOptions: {nzKeyboard: false}},
             acl: this.permissions.configUpdate,
             click: () => this.onSaveSuccess()
           }

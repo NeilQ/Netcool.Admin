@@ -1,52 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
 import { SFSchema } from '@delon/form';
-import { AppConfigService } from "@services";
-import { NotificationService } from "@services";
-import { AppConfig } from "@models";
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { AnnouncementService, NotificationService } from "@services";
+import { Announcement } from "@models";
 import { finalize } from "rxjs/operators";
 
 @Component({
-  selector: 'sys-config-edit',
+  selector: 'sys-announcement-edit',
   templateUrl: './edit.component.html',
 })
-export class SysAppConfigEditComponent implements OnInit {
-  title = '应用设置';
+export class SysAnnouncementEditComponent implements OnInit {
+  title = '公告';
   record: any = {};
   entity: any;
   schema: SFSchema = {
     properties: {
-      name: {type: 'string', title: '名称', maxLength: 32},
-      value: {type: 'string', title: '值', maxLength: 256},
-      description: {type: 'string', title: '说明', maxLength: 256},
+      title: {type: 'string', title: '标题', maxLength: 32},
+      body: {
+        type: 'string', title: '内容', ui: {
+          widget: "wang-editor",
+          config: {height: 500},
+          grid: {
+            span: 24
+          }
+        }
+      },
     },
-    required: ['name', 'value'],
+    required: ['title', 'value'],
   };
   submitting = false;
 
   constructor(
     private modal: NzModalRef,
     private notificationService: NotificationService,
-    private appConfigService: AppConfigService) {
+    private apiService: AnnouncementService
+  ) {
   }
 
   ngOnInit(): void {
     if (this.record.id > 0)
-      this.appConfigService.get(this.record.id).subscribe(role => this.entity = role);
+      this.apiService.get(this.record.id).subscribe(role => this.entity = role);
     else
-      this.entity = new AppConfig();
+      this.entity = new Announcement();
   }
 
   save(value: any) {
     this.submitting = true;
     if (this.record.id > 0) {
-      this.appConfigService.update(this.record.id, value)
+      this.apiService.update(this.record.id, value)
         .pipe(finalize(() => this.submitting = false))
         .subscribe(() => {
           this.modal.close(true);
         });
     } else {
-      this.appConfigService.add(value)
+      this.apiService.add(value)
         .pipe(finalize(() => this.submitting = false))
         .subscribe(() => {
           this.modal.close(true);

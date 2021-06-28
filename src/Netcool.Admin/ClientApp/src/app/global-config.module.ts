@@ -77,7 +77,6 @@ const alainProvides = [
 
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { SFUISchemaItem } from "@delon/form";
-import { Role } from "@models";
 
 const ngZorroConfig: NzConfig = {};
 

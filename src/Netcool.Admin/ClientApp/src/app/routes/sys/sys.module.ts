@@ -6,13 +6,20 @@ import { SysAppConfigEditComponent } from "./app-config/edit/edit.component";
 import { SysOrganizationComponent } from './organization/organization.component';
 import { SysOrganizationEditComponent } from './organization/edit/edit.component';
 import { SysAnnouncementComponent } from './announcement/announcement.component';
+import { SysAnnouncementEditComponent } from './announcement/edit/edit.component';
 
 const COMPONENTS = [
   SysAppConfigComponent,
   SysOrganizationComponent,
   SysOrganizationEditComponent,
-  SysAnnouncementComponent];
-const COMPONENTS_NOROUNT = [SysAppConfigEditComponent, SysOrganizationEditComponent];
+  SysAnnouncementComponent,
+  SysAnnouncementEditComponent
+];
+const COMPONENTS_NOROUNT = [
+  SysAppConfigEditComponent,
+  SysOrganizationEditComponent,
+  SysAnnouncementEditComponent
+];
 
 @NgModule({
   imports: [
