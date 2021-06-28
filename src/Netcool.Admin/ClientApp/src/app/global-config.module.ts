@@ -17,7 +17,7 @@ const alainConfig: AlainConfig = {
       grid: {span: 12},
     } as SFUISchemaItem
   },
-  pageHeader: {homeI18n: 'home'},
+  pageHeader: {home: ''},
   auth: {
     login_url: '/passport/login',
     token_exp_offset: 60
@@ -77,7 +77,6 @@ const alainProvides = [
 
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { SFUISchemaItem } from "@delon/form";
-import { Role } from "@models";
 
 const ngZorroConfig: NzConfig = {};
 
