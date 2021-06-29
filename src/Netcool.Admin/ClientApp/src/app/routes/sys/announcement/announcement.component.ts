@@ -45,11 +45,14 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
           {
             text: "编辑", icon: "edit", type: "modal",
             modal: {component: this.editComponent, params: (record) => Object, modalOptions: {nzKeyboard: false}},
-            acl: this.permissions.configUpdate,
+            acl: this.permissions.announcementUpdate,
+            iif: record => record.status === 1,
             click: () => this.onSaveSuccess()
           },
           {
             text: "发布",
+            iif: record => record.status === 0,
+            acl: this.permissions.announcementPublish,
             pop: {
               title: '确定要发布该公告吗？',
               okType: 'danger'

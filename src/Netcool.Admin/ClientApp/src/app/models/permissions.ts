@@ -26,5 +26,10 @@
   organizationUpdate = "organization.update";
   organizationDelete = "organization.delete";
 
+  announcementCreate = "announcement.create";
+  announcementUpdate = "announcement.update";
+  announcementDelete = "announcement.delete";
+  announcementPublish = "announcement.publish";
+
 }
 

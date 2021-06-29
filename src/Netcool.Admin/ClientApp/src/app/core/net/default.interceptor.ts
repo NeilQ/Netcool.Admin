@@ -6,7 +6,7 @@ import {
   HttpHandler,
   HttpErrorResponse,
   HttpEvent,
-  HttpResponseBase,
+  HttpResponseBase, HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { extractHttpErrorMessage } from "@core/common";
+import { parse } from "date-fns";
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -39,6 +40,13 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
+
+  private dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)$/;
+  private timezoneDateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)\+(\d{2}):(\d{2})$/;
+  // 2020-03-03T00:00:00+08:00
+
+  private timeRegex = /^\d{2}:\d{2}:\d{2}$/;
+
   constructor(private injector: Injector) {
   }
 
@@ -103,6 +111,9 @@ export class DefaultInterceptor implements HttpInterceptor {
         }
         break;
     }
+    if (ev instanceof HttpResponse) {
+      this.convertDates(ev.body);
+    }
     if (ev instanceof HttpErrorResponse) {
       let msg = extractHttpErrorMessage(ev);
       console.error(msg);
@@ -133,9 +144,44 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 允许统一对请求错误处理
         if (event instanceof HttpResponseBase) return this.handleData(event);
         // 若一切都正常，则后续操作
+
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
     );
+  }
+
+  private convertDates(object: Object) {
+    if (!object || !(object instanceof Object)) {
+      return;
+    }
+
+    if (object instanceof Array) {
+      for (const item of object) {
+        this.convertDates(item);
+      }
+    }
+
+    for (const key of Object.keys(object)) {
+      const value = object[key];
+
+      if (value instanceof Array) {
+        for (const item of value) {
+          this.convertDates(item);
+        }
+      }
+
+      if (value instanceof Object) {
+        this.convertDates(value);
+      }
+
+      if (typeof value === 'string' && (this.dateRegex.test(value) || this.timezoneDateRegex.test(value))) {
+        object[key] = new Date(value);
+      }
+
+      if (typeof value === 'string' && this.timeRegex.test(value)) {
+        object[key] = parse(value, 'HH:mm:ss', new Date());
+      }
+    }
   }
 }
