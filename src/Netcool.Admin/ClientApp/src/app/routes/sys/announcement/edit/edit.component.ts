@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { AnnouncementService, NotificationService } from "@services";
@@ -8,6 +8,7 @@ import { finalize } from "rxjs/operators";
 @Component({
   selector: 'sys-announcement-edit',
   templateUrl: './edit.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class SysAnnouncementEditComponent implements OnInit {
   title = '公告';

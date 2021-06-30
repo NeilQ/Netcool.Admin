@@ -14,11 +14,13 @@ import { environment } from '@env/environment';
         </a>
       </layout-default-header-item>
       -->
+      <!--
       <layout-default-header-item direction="left" hidden="mobile">
         <a layout-default-header-item-trigger routerLink="/passport/lock">
           <i nz-icon nzType="lock"></i>
         </a>
       </layout-default-header-item>
+      -->
       <!--
       <layout-default-header-item direction="left" hidden="pc">
         <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
@@ -32,21 +34,27 @@ import { environment } from '@env/environment';
       <layout-default-header-item direction="right">
         <header-notify></header-notify>
       </layout-default-header-item>
+      <!--
       <layout-default-header-item direction="right" hidden="mobile">
         <header-task></header-task>
       </layout-default-header-item>
+      -->
+      <!--
       <layout-default-header-item direction="right" hidden="mobile">
         <header-icon></header-icon>
       </layout-default-header-item>
+      -->
       <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
           <i nz-icon nzType="setting"></i>
         </div>
         <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
           <div nz-menu style="width: 200px;">
+            <!--
             <div nz-menu-item>
               <header-rtl></header-rtl>
             </div>
+            -->
             <div nz-menu-item>
               <header-fullscreen></header-fullscreen>
             </div>
