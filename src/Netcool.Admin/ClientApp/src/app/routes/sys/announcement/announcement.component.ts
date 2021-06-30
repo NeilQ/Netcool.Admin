@@ -39,6 +39,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
       {title: '标题', index: 'title'},
       {title: '状态', index: 'statusDescription', width: '120px'},
       {title: '通知对象', index: 'notifyTargetTypeDescription', width: '120px'},
+      {title: '最后更新时间', index: 'updateTime', type: 'date', width: '150px'},
       {
         title: "操作", width: "200px",
         buttons: [
@@ -46,7 +47,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
             text: "编辑", icon: "edit", type: "modal",
             modal: {component: this.editComponent, params: (record) => Object, modalOptions: {nzKeyboard: false}},
             acl: this.permissions.announcementUpdate,
-            iif: record => record.status === 1,
+            iif: record => record.status === 0,
             click: () => this.onSaveSuccess()
           },
           {

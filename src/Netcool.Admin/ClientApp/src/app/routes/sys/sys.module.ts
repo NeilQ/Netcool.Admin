@@ -7,6 +7,7 @@ import { SysOrganizationComponent } from './organization/organization.component'
 import { SysOrganizationEditComponent } from './organization/edit/edit.component';
 import { SysAnnouncementComponent } from './announcement/announcement.component';
 import { SysAnnouncementEditComponent } from './announcement/edit/edit.component';
+import { SysAnnouncementViewComponent } from './announcement/view/view.component';
 
 const COMPONENTS = [
   SysAppConfigComponent,
@@ -14,7 +15,8 @@ const COMPONENTS = [
   SysOrganizationEditComponent,
   SysAnnouncementComponent,
   SysAnnouncementEditComponent
-];
+,
+  SysAnnouncementViewComponent];
 const COMPONENTS_NOROUNT = [
   SysAppConfigEditComponent,
   SysOrganizationEditComponent,

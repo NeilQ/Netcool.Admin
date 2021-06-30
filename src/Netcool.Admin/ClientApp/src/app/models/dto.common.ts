@@ -87,11 +87,18 @@ export enum PermissionType {
   Function
 }
 
+export class UserAnnouncement {
+  announcement: Announcement;
+  userId: number;
+}
+
 export class Announcement {
+  id: number;
   title: string;
   body: string;
   status: number;
   notifyTargetType: number;
   statusDescription: string;
   notifyTargetTypeDescription: string;
+  updateTime: Date;
 }
