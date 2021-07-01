@@ -8,19 +8,22 @@ import { SysOrganizationEditComponent } from './organization/edit/edit.component
 import { SysAnnouncementComponent } from './announcement/announcement.component';
 import { SysAnnouncementEditComponent } from './announcement/edit/edit.component';
 import { SysAnnouncementViewComponent } from './announcement/view/view.component';
+import { SysUserAnnouncementComponent } from './announcement/user-announcement/user-announcement.component';
 
 const COMPONENTS = [
   SysAppConfigComponent,
   SysOrganizationComponent,
   SysOrganizationEditComponent,
   SysAnnouncementComponent,
-  SysAnnouncementEditComponent
-,
-  SysAnnouncementViewComponent];
+  SysAnnouncementEditComponent,
+  SysAnnouncementViewComponent,
+  SysUserAnnouncementComponent];
 const COMPONENTS_NOROUNT = [
   SysAppConfigEditComponent,
   SysOrganizationEditComponent,
-  SysAnnouncementEditComponent
+  SysAnnouncementEditComponent,
+  SysAnnouncementViewComponent,
+  SysUserAnnouncementComponent
 ];
 
 @NgModule({
@@ -30,7 +33,7 @@ const COMPONENTS_NOROUNT = [
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
+    ...COMPONENTS_NOROUNT,
   ],
   entryComponents: COMPONENTS_NOROUNT
 })

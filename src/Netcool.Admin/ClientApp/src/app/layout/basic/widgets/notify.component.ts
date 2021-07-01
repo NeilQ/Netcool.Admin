@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import parse from 'date-fns/parse';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserAnnouncementService } from "@services";
 import { format } from "date-fns";
-import { ModalHelper, SettingsService } from "@delon/theme";
+import { DrawerHelper, ModalHelper, SettingsService } from "@delon/theme";
 import { SysAnnouncementViewComponent } from "../../../routes/sys/announcement/view/view.component";
+import { SysUserAnnouncementComponent } from "../../../routes/sys/announcement/user-announcement/user-announcement.component";
 
 @Component({
   selector: 'header-notify',
@@ -44,9 +44,9 @@ export class HeaderNotifyComponent implements OnInit {
   loading = false;
   userId: number;
 
-  constructor(private msg: NzMessageService,
-              private nzI18n: NzI18nService,
+  constructor(private nzI18n: NzI18nService,
               private modal: ModalHelper,
+              private drawer: DrawerHelper,
               private settingsService: SettingsService,
               private cdr: ChangeDetectorRef,
               private userAnnouncementService: UserAnnouncementService) {
@@ -106,7 +106,11 @@ export class HeaderNotifyComponent implements OnInit {
   }
 
   clear(type: string): void {
-    //this.msg.success(`清空了 ${type}`);
+    this.drawer.create('公告列表', SysUserAnnouncementComponent, {}, {
+      drawerOptions: {
+        nzMaskClosable: false, nzWidth: 600
+      }
+    }).subscribe();
   }
 
   select(res: NoticeIconSelect): void {
@@ -114,7 +118,7 @@ export class HeaderNotifyComponent implements OnInit {
     //let type = res.item['type'];
 
     this.modal
-      .createStatic(SysAnnouncementViewComponent, {id: id, userId: this.userId}, {
+      .create(SysAnnouncementViewComponent, {id: id}, {
         modalOptions: {
           nzMaskClosable: false,
           nzKeyboard: false
