@@ -3,6 +3,7 @@
     {{item.announcement.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}
     <nz-list-item-meta>
       <nz-list-item-meta-title>
+        <nz-badge *ngIf="!item.isRead" nzColor="red"></nz-badge>
         <a (click)="select(item.announcement.id)"> {{item.announcement.title}}</a>
       </nz-list-item-meta-title>
     </nz-list-item-meta>

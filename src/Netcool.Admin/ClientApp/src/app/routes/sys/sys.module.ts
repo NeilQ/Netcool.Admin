@@ -8,7 +8,7 @@ import { SysOrganizationEditComponent } from './organization/edit/edit.component
 import { SysAnnouncementComponent } from './announcement/announcement.component';
 import { SysAnnouncementEditComponent } from './announcement/edit/edit.component';
 import { SysAnnouncementViewComponent } from './announcement/view/view.component';
-import { SysUserAnnouncementComponent } from './announcement/user-announcement/user-announcement.component';
+import { SysUserAnnouncementComponent } from "./announcement/user-announcement/user-announcement.component";
 
 const COMPONENTS = [
   SysAppConfigComponent,

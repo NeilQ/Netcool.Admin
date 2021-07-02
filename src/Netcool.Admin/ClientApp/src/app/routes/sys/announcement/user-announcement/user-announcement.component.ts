@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NotificationService, UserAnnouncementService } from "@services";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { NzDrawerRef } from "ng-zorro-antd/drawer";
 import { ModalHelper, SettingsService } from "@delon/theme";
+import { NotificationService, UserAnnouncementService } from "@services";
 import { PagedResult, UserAnnouncement } from "@models";
 import { tap } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { NzDrawerRef } from "ng-zorro-antd/drawer";
 import { SysAnnouncementViewComponent } from "../view/view.component";
 
 @Component({
@@ -12,7 +12,7 @@ import { SysAnnouncementViewComponent } from "../view/view.component";
   templateUrl: './user-announcement.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SysUserAnnouncementComponent implements OnInit {
+export class SysUserAnnouncementComponent implements OnInit, OnDestroy {
 
   constructor(
     private drawer: NzDrawerRef,
@@ -34,7 +34,12 @@ export class SysUserAnnouncementComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.settingsService.user.id;
     this.loadMore();
+    this.apiService.read$.subscribe(id => {
+      let temp = this.ds.find(v => v.announcement.id == id);
+      temp.isRead = true;
+    })
   }
+
 
   loadMore(): void {
     this.loading = true;
@@ -71,6 +76,10 @@ export class SysUserAnnouncementComponent implements OnInit {
 
   close() {
     this.drawer.close();
+  }
+
+  ngOnDestroy(): void {
+    this.apiService.read$.unsubscribe();
   }
 
 }

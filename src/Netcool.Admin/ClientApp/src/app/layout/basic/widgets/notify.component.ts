@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import parse from 'date-fns/parse';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
@@ -23,7 +23,7 @@ import { SysUserAnnouncementComponent } from "../../../routes/sys/announcement/u
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderNotifyComponent implements OnInit {
+export class HeaderNotifyComponent implements OnInit, OnDestroy {
   data: NoticeItem[] = [
     {
       title: '公告',
@@ -52,9 +52,24 @@ export class HeaderNotifyComponent implements OnInit {
               private userAnnouncementService: UserAnnouncementService) {
   }
 
+  ngOnDestroy(): void {
+    this.userAnnouncementService.read$.unsubscribe();
+  }
+
   ngOnInit() {
     this.userId = this.settingsService.user.id;
     this.loadData();
+    this.userAnnouncementService.read$.subscribe(id => {
+      let list = this.data.find(n => n.title == '公告').list;
+      let index = list.findIndex(t => t.id == id);
+      if (index !== -1) {
+        list.splice(index, 1);
+        this.data = this.updateNoticeData(list);
+        this.count--;
+        this.cdr.detectChanges();
+      }
+      console.log(this.data.find(n => n.title == '公告').list);
+    })
   }
 
   private updateNoticeData(notices: NoticeIconList[]): NoticeItem[] {
@@ -63,11 +78,9 @@ export class HeaderNotifyComponent implements OnInit {
 
     notices.forEach((item) => {
       const newItem = {...item} as NoticeIconList;
-      if (typeof newItem.datetime === 'string') {
-        newItem.datetime = parse(newItem.datetime, 'yyyy-MM-dd', new Date());
-      }
-      if (newItem.datetime) {
-        newItem.datetime = format(newItem.datetime, 'yyyy-MM-dd HH:mm');
+
+      if (newItem.updateTime) {
+        newItem.datetime = format(newItem.updateTime, 'yyyy-MM-dd HH:mm');
       }
       if (newItem.extra && newItem.status) {
         newItem.color = ({
@@ -95,7 +108,9 @@ export class HeaderNotifyComponent implements OnInit {
             id: item.announcement.id,
             title: item.announcement.title,
             datetime: item.announcement.updateTime,
+            updateTime: item.announcement.updateTime,
             type: '公告',
+            isRead: item.isRead
           })
         })
         this.count = data.items.length;
@@ -115,10 +130,11 @@ export class HeaderNotifyComponent implements OnInit {
 
   select(res: NoticeIconSelect): void {
     let id = res.item['id'];
+    let isRead = res.item['isRead'];
     //let type = res.item['type'];
 
     this.modal
-      .create(SysAnnouncementViewComponent, {id: id}, {
+      .create(SysAnnouncementViewComponent, {id: id, isRead: isRead}, {
         modalOptions: {
           nzMaskClosable: false,
           nzKeyboard: false

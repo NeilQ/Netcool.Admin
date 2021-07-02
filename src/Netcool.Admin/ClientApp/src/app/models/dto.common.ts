@@ -90,6 +90,13 @@ export enum PermissionType {
 export class UserAnnouncement {
   announcement: Announcement;
   userId: number;
+  isRead: boolean;
+  readTime: Date;
+}
+
+export class UserAnnouncementReadInput {
+  userId: number;
+  announcementIds: number[];
 }
 
 export class Announcement {
