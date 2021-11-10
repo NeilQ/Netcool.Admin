@@ -9,6 +9,7 @@ import { of } from "rxjs";
 @Component({
   selector: 'sys-announcement-view',
   templateUrl: './view.component.html',
+  styleUrls:['./view.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SysAnnouncementViewComponent implements OnInit {
