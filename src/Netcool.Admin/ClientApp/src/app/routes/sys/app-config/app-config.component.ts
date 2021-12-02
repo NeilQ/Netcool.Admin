@@ -39,7 +39,7 @@ export class SysAppConfigComponent extends CrudTableComponentBase<AppConfig> {
         buttons: [
           {
             text: "编辑", icon: "edit", type: "modal",
-            modal: {component: this.editComponent, params: (record) => Object},
+            modal: {component: this.editComponent, params: (record) => record},
             acl: this.permissions.configUpdate,
             click: () => this.onSaveSuccess()
           }

@@ -1,10 +1,10 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { throwIfAlreadyLoaded } from '@core';
-import { DelonMockModule } from '@delon/mock';
 import { AlainThemeModule } from '@delon/theme';
 
 import { ACLCanType, DelonACLModule } from '@delon/acl';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
+import { environment } from '@env/environment';
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config
 
@@ -32,15 +32,7 @@ const alainConfig: AlainConfig = {
   },
 };
 
-// mock
-import { environment } from '@env/environment';
-import * as MOCK_DATA from '../../_mock';
-
-if (!environment.production) {
-  alainConfig.mock = {data: MOCK_DATA};
-}
-
-const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];
+const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot()];
 
 
 const alainProvides = [
@@ -86,7 +78,7 @@ const zorroProvides = [{provide: NZ_CONFIG, useValue: ngZorroConfig}];
 
 
 @NgModule({
-  imports: [...alainModules],
+  imports: [...alainModules, ...(environment.modules || [])],
 })
 export class GlobalConfigModule {
   constructor(@Optional() @SkipSelf() parentModule: GlobalConfigModule) {

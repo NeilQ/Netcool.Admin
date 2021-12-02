@@ -116,7 +116,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
     if (ev instanceof HttpErrorResponse) {
       let msg = extractHttpErrorMessage(ev);
-      console.error(msg);
+      if (isDevMode()) {
+        console.error(msg);
+      }
       if (ev.status != 401) {
         if (isDevMode()) {
           this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
@@ -135,7 +137,8 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
+      const {baseUrl} = environment.api;
+      url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);
     }
 
     const newReq = req.clone({url});
@@ -144,7 +147,6 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 允许统一对请求错误处理
         if (event instanceof HttpResponseBase) return this.handleData(event);
         // 若一切都正常，则后续操作
-
         return of(event);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),

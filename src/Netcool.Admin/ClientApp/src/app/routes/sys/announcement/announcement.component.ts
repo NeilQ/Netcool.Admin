@@ -45,7 +45,7 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
         buttons: [
           {
             text: "编辑", icon: "edit", type: "modal",
-            modal: {component: this.editComponent, params: (record) => Object, modalOptions: {nzKeyboard: false}},
+            modal: {component: this.editComponent, params: (record) => record, modalOptions: {nzKeyboard: false}},
             acl: this.permissions.announcementUpdate,
             iif: record => record.status === 0,
             click: () => this.onSaveSuccess()

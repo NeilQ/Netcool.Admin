@@ -60,6 +60,7 @@ export function extractHttpErrorMessage(error: HttpErrorResponse): string {
   } else {
     console.error(
       `Backend returned code ${error.status}, ` +
+      `url was: ${error.url}` +
       `body was: ${error.error}`);
     if (error.error && (error.error.Message || error.error.message)) {
       msg = error.error.Message || error.error.message;
