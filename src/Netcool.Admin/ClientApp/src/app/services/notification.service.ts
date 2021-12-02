@@ -50,7 +50,7 @@ export class NotificationService {
     this.modalService.confirm({
       nzTitle: '确定要删除该记录吗？',
       nzContent: '',
-      nzOkType: 'danger',
+      nzOkDanger: true,
       nzOnOk: () => onOk(),
     });
   }
@@ -59,7 +59,7 @@ export class NotificationService {
     this.modalService.confirm({
       nzTitle: message,
       nzContent: '',
-      nzOkType: 'danger',
+      nzOkDanger: true,
       nzOnOk: () => onOk(),
     });
   }
