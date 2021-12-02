@@ -76,7 +76,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-alain": "^11.8.0",
+    "ng-alain": "^12.4.2",
     "ng-alain-codelyzer": "^0.0.1",
     "typescript": "~4.3.5",
     "xlsx": "^0.15.6"
