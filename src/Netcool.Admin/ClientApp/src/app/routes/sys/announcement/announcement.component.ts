@@ -4,6 +4,7 @@ import { ModalHelper } from '@delon/theme';
 import { Announcement, CrudTableComponentBase } from "@models";
 import { AnnouncementService, EnumService, NotificationService } from "@services";
 import { SysAnnouncementEditComponent } from "./edit/edit.component";
+import { SysAnnouncementViewComponent } from "./view/view.component";
 
 @Component({
   selector: 'sys-announcement',
@@ -48,6 +49,11 @@ export class SysAnnouncementComponent extends CrudTableComponentBase<Announcemen
             modal: {component: this.editComponent, params: (record) => record, modalOptions: {nzKeyboard: false}},
             acl: this.permissions.announcementUpdate,
             iif: record => record.status === 0,
+            click: () => this.onSaveSuccess()
+          },
+          {
+            text: "预览", type:"modal",
+            modal: {component: SysAnnouncementViewComponent, params: (id) => id, modalOptions: {nzKeyboard: false}},
             click: () => this.onSaveSuccess()
           },
           {

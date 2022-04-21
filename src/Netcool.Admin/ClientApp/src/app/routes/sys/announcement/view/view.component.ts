@@ -3,8 +3,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { AnnouncementService, NotificationService, UserAnnouncementService } from "@services";
 import { switchMap } from "rxjs/operators";
 import { SettingsService } from "@delon/theme";
-import { UserAnnouncement } from "@models";
 import { of } from "rxjs";
+import { debuglog } from "util";
 
 @Component({
   selector: 'sys-announcement-view',
@@ -26,6 +26,7 @@ export class SysAnnouncementViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.id)
     this.apiService.get(this.id)
       .pipe(switchMap((announcement) => {
         this.i = announcement;
