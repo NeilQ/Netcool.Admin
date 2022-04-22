@@ -24,7 +24,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
-              "date-fns"
+              "date-fns",
+              "ajv",
+              "ajv-formats"
             ],
             "assets": [
               "src/assets",
@@ -39,7 +41,6 @@
               "src/bootstrap.scss"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -120,7 +121,6 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
             ],
             "assets": [
               "src/assets"
