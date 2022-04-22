@@ -27,15 +27,14 @@ const COMPONENTS_NOROUNT = [
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    SysRoutingModule
-  ],
-  declarations: [
-    ...COMPONENTS,
-    ...COMPONENTS_NOROUNT,
-  ],
-  entryComponents: COMPONENTS_NOROUNT
+    imports: [
+        SharedModule,
+        SysRoutingModule
+    ],
+    declarations: [
+        ...COMPONENTS,
+        ...COMPONENTS_NOROUNT,
+    ]
 })
 export class SysModule {
 }

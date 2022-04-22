@@ -24,15 +24,14 @@ const COMPONENTS_NOROUNT = [
   AuthUserResetPasswordComponent];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    AuthRoutingModule
-  ],
-  declarations: [
-    ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
-  ],
-  entryComponents: COMPONENTS_NOROUNT
+    imports: [
+        SharedModule,
+        AuthRoutingModule
+    ],
+    declarations: [
+        ...COMPONENTS,
+        ...COMPONENTS_NOROUNT
+    ]
 })
 export class AuthModule {
 }
