@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
@@ -10,10 +10,10 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
   styleUrls: ['./lock.component.less'],
 })
 export class UserLockComponent {
-  f: FormGroup;
+  f: UntypedFormGroup;
 
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     public settings: SettingsService,
     private router: Router,

@@ -1,7 +1,7 @@
 import { SettingsService } from '@delon/theme';
 import { Component, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
@@ -22,7 +22,7 @@ export class UserLoginComponent {
   loading = false;
 
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     modalSrv: NzModalService,
     private router: Router,
     private settingsService: SettingsService,
@@ -57,7 +57,7 @@ export class UserLoginComponent {
     return this.form.controls.mobile;
   }
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   error = '';
 
   submit() {

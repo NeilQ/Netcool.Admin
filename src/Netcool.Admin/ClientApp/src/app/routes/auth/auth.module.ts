@@ -19,8 +19,7 @@ const COMPONENTS_NOROUNT = [
   AuthRoleEditComponent,
   AuthUserEditComponent,
   AuthUserRoleEditComponent,
-  AuthRoleSetPermissionsComponent
-  ,
+  AuthRoleSetPermissionsComponent,
   AuthUserResetPasswordComponent];
 
 @NgModule({
