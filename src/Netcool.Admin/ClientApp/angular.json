@@ -75,16 +75,16 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
-                }
-              ]
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -97,9 +97,8 @@
             "production": {
               "browserTarget": "Netcool.Admin:build:production"
             },
-            "hmr": {
-              "browserTarget": "Netcool.Admin:build:hmr",
-              "hmr": true
+            "development": {
+              "browserTarget": "ng-alain:build:development"
             }
           }
         },
