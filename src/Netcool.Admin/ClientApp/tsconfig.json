@@ -38,6 +38,7 @@
       "@models": [
         "src/app/models/index"
       ]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   }
 }
