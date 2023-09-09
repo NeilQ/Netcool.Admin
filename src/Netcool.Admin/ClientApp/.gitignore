@@ -9,6 +9,7 @@
 # dependencies
 /node_modules
 /yarn.lock
+/package.lock
 
 # IDEs and editors
 /.idea
