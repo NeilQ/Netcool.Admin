@@ -134,7 +134,8 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.server.json",
             "sourceMap": true,
-            "optimization": false
+            "optimization": false,
+            "buildOptimizer": false
           },
           "configurations": {
             "dev": {
@@ -142,14 +143,16 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true
+              "extractLicenses": true,
+              "buildOptimizer": true
             },
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true
+              "extractLicenses": true,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": ""
@@ -158,7 +161,7 @@
     }
   },
   "cli": {
-    "packageManager": "yarn",
+    "packageManager": "npm",
     "schematicCollections": [
       "@schematics/angular",
       "ng-alain"
