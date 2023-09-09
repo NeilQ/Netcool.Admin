@@ -54,7 +54,7 @@
     "screenfull": "^5.0.2",
     "tslib": "^2.0.0",
     "wangeditor": "^4.7.4",
-    "zone.js": "~0.11.4",
+    "zone.js": "~0.13.0",
     "ajv-formats": "^2.1.1"
   },
   "devDependencies": {
