@@ -61,7 +61,7 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
         index: 'organization',
         format: item => item.organization == null ? "" : item.organization.name
       },
-      {title: '电话', width: "200px", index: 'phone'},
+      {title: '电话', width: "150px", index: 'phone'},
       {title: '邮箱', width: "200px", index: 'email'},
       {title: '性别', width: "80px", index: 'genderDescription'},
       {
@@ -71,7 +71,7 @@ export class AuthUserComponent extends CrudTableComponentBase<User> {
           false: {text: '禁用', color: 'default'},
         },
       },
-      {title: '角色', width: "200px", index: 'roles', format: item => item.roles.map(t => (t.name)).join(', ')},
+      {title: '角色', width: "150px", index: 'roles', format: item => item.roles.map(t => (t.name)).join(', ')},
       {
         title: '操作', width: "200px", buttons: [
           {
