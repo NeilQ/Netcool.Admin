@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 WORKDIR /app
 
 # set up node
-ENV NODE_VERSION 10.16.0 
+ENV NODE_VERSION 18.17.1 
 RUN curl -SL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" --output nodejs.tar.gz \
     && tar -xzf "nodejs.tar.gz" -C /usr/local --strip-components=1 \
     && rm nodejs.tar.gz \
