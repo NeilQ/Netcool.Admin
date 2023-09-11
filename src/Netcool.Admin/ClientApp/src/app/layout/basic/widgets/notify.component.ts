@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
-import parse from 'date-fns/parse';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { UserAnnouncementService } from "@services";
 import { format } from "date-fns";

@@ -1,16 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { I18NService } from '@core';
 import { ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean } from '@delon/util/decorator';
-
-import { I18NService } from '@core';
 
 @Component({
   selector: 'header-i18n',
   template: `
     <div *ngIf="showLangText" nz-dropdown [nzDropdownMenu]="langMenu" nzPlacement="bottomRight">
       <i nz-icon nzType="global"></i>
-      {{ 'menu.lang' | translate }}
+      {{ 'menu.lang' | i18n }}
       <i nz-icon nzType="down"></i>
     </div>
     <i *ngIf="!showLangText" nz-dropdown [nzDropdownMenu]="langMenu" nzPlacement="bottomRight" nz-icon nzType="global"></i>
@@ -23,7 +22,10 @@ import { I18NService } from '@core';
       </ul>
     </nz-dropdown-menu>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.flex-1]': 'true'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderI18nComponent {
   static ngAcceptInputType_showLangText: BooleanInput;
@@ -38,7 +40,11 @@ export class HeaderI18nComponent {
     return this.settings.layout.lang;
   }
 
-  constructor(private settings: SettingsService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService, @Inject(DOCUMENT) private doc: any) {}
+  constructor(
+    private settings: SettingsService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    @Inject(DOCUMENT) private doc: any
+  ) {}
 
   change(lang: string): void {
     const spinEl = this.doc.createElement('div');
@@ -46,8 +52,10 @@ export class HeaderI18nComponent {
     spinEl.innerHTML = `<span class="ant-spin-dot ant-spin-dot-spin"><i></i><i></i><i></i><i></i></span>`;
     this.doc.body.appendChild(spinEl);
 
-    this.i18n.use(lang);
-    this.settings.setLayout('lang', lang);
-    setTimeout(() => this.doc.location.reload());
+    this.i18n.loadLangData(lang).subscribe(res => {
+      this.i18n.use(lang, res);
+      this.settings.setLayout('lang', lang);
+      setTimeout(() => this.doc.location.reload());
+    });
   }
 }

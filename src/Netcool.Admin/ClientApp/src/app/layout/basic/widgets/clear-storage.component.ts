@@ -6,16 +6,18 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   selector: 'header-clear-storage',
   template: `
     <i nz-icon nzType="tool"></i>
-    {{ 'menu.clear.local.storage' | translate }}
+    {{ 'menu.clear.local.storage' | i18n }}
   `,
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '[class.d-block]': 'true',
+    '[class.flex-1]': 'true'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderClearStorageComponent {
-  constructor(private modalSrv: NzModalService, private messageSrv: NzMessageService) {}
+  constructor(
+    private modalSrv: NzModalService,
+    private messageSrv: NzMessageService
+  ) {}
 
   @HostListener('click')
   _click(): void {
@@ -24,7 +26,7 @@ export class HeaderClearStorageComponent {
       nzOnOk: () => {
         localStorage.clear();
         this.messageSrv.success('Clear Finished!');
-      },
+      }
     });
   }
 }

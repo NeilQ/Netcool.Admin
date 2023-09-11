@@ -2,7 +2,8 @@
 import { LoginResult, Role, User } from "@models";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpContext } from "@angular/common/http";
+import { ALLOW_ANONYMOUS } from "@delon/auth";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +14,9 @@ export class UserService extends CrudRestServiceBase<User> {
   }
 
   login(body: { name: string, password: string }): Observable<LoginResult> {
-    return this.http.post<LoginResult>("api/account/authenticate?_allow_anonymous=true", body);
+    return this.http.post<LoginResult>("api/account/authenticate?_allow_anonymous=true", body, {
+      context: new HttpContext().set(ALLOW_ANONYMOUS, true)
+    });
   }
 
   getRoles(id: number): Observable<Role[]> {

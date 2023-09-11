@@ -1,6 +1,6 @@
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { DelonLocaleService, SettingsService } from '@delon/theme';
-import { TranslateService } from '@ngx-translate/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { of } from 'rxjs';
@@ -8,19 +8,19 @@ import { of } from 'rxjs';
 import { I18NService } from './i18n.service';
 
 describe('Service: I18n', () => {
-  let injector: TestBedStatic;
+  let injector: TestBed;
   let srv: I18NService;
   const MockSettingsService: NzSafeAny = {
     layout: {
-      lang: null,
-    },
+      lang: null
+    }
   };
   const MockNzI18nService = {
     setLocale: () => {},
-    setDateLocale: () => {},
+    setDateLocale: () => {}
   };
   const MockDelonLocaleService = {
-    setLocale: () => {},
+    setLocale: () => {}
   };
   const MockTranslateService = {
     getBrowserLang: jasmine.createSpy('getBrowserLang'),
@@ -28,18 +28,18 @@ describe('Service: I18n', () => {
     setLocale: () => {},
     getDefaultLang: () => '',
     use: (lang: string) => of(lang),
-    instant: jasmine.createSpy('instant'),
+    instant: jasmine.createSpy('instant')
   };
 
   function genModule(): void {
     injector = TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         I18NService,
         { provide: SettingsService, useValue: MockSettingsService },
         { provide: NzI18nService, useValue: MockNzI18nService },
-        { provide: DelonLocaleService, useValue: MockDelonLocaleService },
-        { provide: TranslateService, useValue: MockTranslateService },
-      ],
+        { provide: DelonLocaleService, useValue: MockDelonLocaleService }
+      ]
     });
     srv = TestBed.inject(I18NService);
   }
@@ -49,10 +49,8 @@ describe('Service: I18n', () => {
     genModule();
     expect(srv).toBeTruthy();
     expect(srv.defaultLang).toBe('zh-CN');
-    const t = TestBed.inject(TranslateService);
     srv.fanyi('a');
     srv.fanyi('a', {});
-    expect(t.instant).toHaveBeenCalled();
   });
 
   it('should be used layout as default language', () => {
@@ -70,10 +68,16 @@ describe('Service: I18n', () => {
     expect(srv.defaultLang).toBe('zh-TW');
   });
 
+  it('should be use default language when the browser language is not in the list', () => {
+    spyOnProperty(navigator, 'languages').and.returnValue(['es-419']);
+    genModule();
+    expect(srv.defaultLang).toBe('zh-CN');
+  });
+
   it('should be trigger notify when changed language', () => {
     genModule();
-    srv.use('en-US');
-    srv.change.subscribe((lang) => {
+    srv.use('en-US', {});
+    srv.change.subscribe(lang => {
       expect(lang).toBe('en-US');
     });
   });

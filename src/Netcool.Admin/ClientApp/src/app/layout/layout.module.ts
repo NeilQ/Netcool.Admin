@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
+import { HotkeyModule } from '@delon/abc/hotkey';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { LayoutDefaultModule } from '@delon/theme/layout-default';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
 import { ThemeBtnModule } from '@delon/theme/theme-btn';
-import { TranslateModule } from '@ngx-translate/core';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -47,6 +47,7 @@ const HEADERCOMPONENTS = [
 
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
+import { AlainThemeModule } from "@delon/theme";
 const PASSPORT = [LayoutPassportComponent];
 
 @NgModule({
@@ -54,11 +55,12 @@ const PASSPORT = [LayoutPassportComponent];
     CommonModule,
     FormsModule,
     RouterModule,
+    AlainThemeModule.forChild(),
     ThemeBtnModule,
     SettingDrawerModule,
     LayoutDefaultModule,
-    TranslateModule,
     NoticeIconModule,
+    HotkeyModule,
     GlobalFooterModule,
     NzDropDownModule,
     NzInputModule,

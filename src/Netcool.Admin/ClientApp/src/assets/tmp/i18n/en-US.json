@@ -1,5 +1,5 @@
 {
-  "menu.search.placeholder": "Search for people, file, photos...",
+  "menu.search.placeholder": "Search for people, file, photos... (Press F1 to focus)",
   "menu.fullscreen": "Fullscreen",
   "menu.fullscreen.exit": "Exit Fullscreen",
   "menu.clear.local.storage": "Clear Local Storage",
@@ -85,7 +85,7 @@
   "app.analysis.all-year": "All Year",
   "app.analysis.all-month": "All Month",
   "app.analysis.all-week": "All Week",
-  "app.analysis.all-day": "All day",
+  "app.analysis.all-today": "All day",
   "app.analysis.search-users": "Search Users",
   "app.analysis.per-capita-search": "Per Capita Search",
   "app.analysis.online-top-search": "Online Top Search",
@@ -130,7 +130,7 @@
   "app.register.sign-in": "Already have an account?",
   "app.register-result.msg": "Account：registered at {{email}}",
   "app.register-result.activation-email":
-    "The activation email has been sent to your email address and is valid for 24 hours. Please log in to the email in time and click on the link in the email to activate the account.",
+  "The activation email has been sent to your email address and is valid for 24 hours. Please log in to the email in time and click on the link in the email to activate the account.",
   "app.register-result.back-home": "Back to home",
   "app.register-result.view-mailbox": "View mailbox",
   "validation.email.required": "Please enter your email!",
@@ -138,7 +138,7 @@
   "validation.password.required": "Please enter your password!",
   "validation.password.twice": "The passwords entered twice do not match!",
   "validation.password.strength.msg":
-    "Please enter at least 6 characters and don't use passwords that are easy to guess.",
+  "Please enter at least 6 characters and don't use passwords that are easy to guess.",
   "validation.password.strength.strong": "Strength: strong",
   "validation.password.strength.medium": "Strength: medium",
   "validation.password.strength.short": "Strength: too short",
