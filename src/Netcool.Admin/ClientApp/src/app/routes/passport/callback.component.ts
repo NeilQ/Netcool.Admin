@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { SocialService } from '@delon/auth';
 import { SettingsService } from '@delon/theme';
 
@@ -7,32 +6,28 @@ import { SettingsService } from '@delon/theme';
   selector: 'app-callback',
   template: ``,
   providers: [SocialService],
+  standalone: true
 })
 export class CallbackComponent implements OnInit {
-  type: string;
-
-  constructor(
-    private socialService: SocialService,
-    private settingsSrv: SettingsService,
-    private route: ActivatedRoute,
-  ) {}
+  private readonly socialService = inject(SocialService);
+  private readonly settingsSrv = inject(SettingsService);
+  @Input() type = '';
 
   ngOnInit(): void {
-    this.type = this.route.snapshot.params.type;
     this.mockModel();
   }
 
-  private mockModel() {
+  private mockModel(): void {
     const info = {
       token: '123456789',
       name: 'cipchk',
       email: `${this.type}@${this.type}.com`,
       id: 10000,
-      time: +new Date(),
+      time: +new Date()
     };
     this.settingsSrv.setUser({
       ...this.settingsSrv.user,
-      ...info,
+      ...info
     });
     this.socialService.callback(info);
   }

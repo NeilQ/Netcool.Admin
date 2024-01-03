@@ -14,7 +14,7 @@ export class UserService extends CrudRestServiceBase<User> {
   }
 
   login(body: { name: string, password: string }): Observable<LoginResult> {
-    return this.http.post<LoginResult>("api/account/authenticate?_allow_anonymous=true", body, {
+    return this.http.post<LoginResult>("api/account/authenticate", body, {
       context: new HttpContext().set(ALLOW_ANONYMOUS, true)
     });
   }

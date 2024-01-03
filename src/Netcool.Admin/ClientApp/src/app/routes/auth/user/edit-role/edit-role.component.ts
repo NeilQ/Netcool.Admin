@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { SFSchema, SFSchemaEnumType, SFTransferWidgetSchema, SFUISchema } from '@delon/form';
+import { SFSchema, SFSchemaEnumType, SFUISchema } from '@delon/form';
+import { SFTransferWidgetSchema } from '@delon/form/widgets/transfer';
 import { EnumService, RoleService, UserService } from "@services";
 import { NotificationService } from "@services";
 import { Role } from "@models";
-import { finalize, map, tap } from "rxjs/operators";
+import { finalize, map } from "rxjs/operators";
 
 @Component({
   selector: 'auth-user-role-edit',

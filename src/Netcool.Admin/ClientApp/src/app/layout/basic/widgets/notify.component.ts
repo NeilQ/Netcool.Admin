@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { NoticeIconList, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { UserAnnouncementService } from "@services";
 import { format } from "date-fns";
 import { DrawerHelper, ModalHelper, SettingsService } from "@delon/theme";
+import { NoticeIconList, NoticeIconModule, NoticeIconSelect, NoticeItem } from '@delon/abc/notice-icon';
 import { SysAnnouncementViewComponent } from "../../../routes/sys/announcement/view/view.component";
 import { SysUserAnnouncementComponent } from "../../../routes/sys/announcement/user-announcement/user-announcement.component";
 
@@ -21,6 +21,8 @@ import { SysUserAnnouncementComponent } from "../../../routes/sys/announcement/u
     ></notice-icon>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NoticeIconModule]
 })
 export class HeaderNotifyComponent implements OnInit, OnDestroy {
   data: NoticeItem[] = [

@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
-import { Router, NavigationEnd, RouteConfigLoadStart, NavigationError } from '@angular/router';
+import { Router, NavigationEnd, RouteConfigLoadStart, NavigationError, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
+import { stepPreloader, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 import { environment } from "@env/environment";
@@ -11,8 +11,12 @@ import { environment } from "@env/environment";
   template: `
     <router-outlet></router-outlet>
   `,
+  standalone: true,
+  imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit {
+  private donePreloader = stepPreloader();
+
   constructor(
     el: ElementRef,
     renderer: Renderer2,
@@ -41,6 +45,7 @@ export class AppComponent implements OnInit {
         });
       }
       if (ev instanceof NavigationEnd) {
+        this.donePreloader();
         this.titleSrv.setTitle();
         this.modalSrv.closeAll();
       }

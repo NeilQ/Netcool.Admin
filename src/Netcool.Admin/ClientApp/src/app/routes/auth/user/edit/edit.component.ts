@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { SFSchema, SFTreeSelectWidgetSchema } from '@delon/form';
+import { SFSchema  } from '@delon/form';
+import type { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select';
 import { EnumService, OrganizationService, UserService } from "@services";
 import { NotificationService } from "@services";
 import { User } from "@models";
