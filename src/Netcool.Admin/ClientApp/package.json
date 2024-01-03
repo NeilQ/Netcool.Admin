@@ -38,7 +38,6 @@
     "@delon/mock": "^17.0.5",
     "@delon/theme": "^17.0.5",
     "@delon/util": "^17.0.5",
-    "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.4.1",
     "date-fns": "^2.12.0",
     "ng-zorro-antd": "^17.1.0",
