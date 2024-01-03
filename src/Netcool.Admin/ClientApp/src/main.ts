@@ -25,5 +25,4 @@ platformBrowserDynamic()
       win.appBootstrap();
     }
     return res;
-  })
-  .catch((err) => console.error(err));
+  });
