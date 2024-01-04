@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\scripts\" />
     <Folder Include="ClientApp\src\app\shared\json-schema\widgets" />
   </ItemGroup>
 

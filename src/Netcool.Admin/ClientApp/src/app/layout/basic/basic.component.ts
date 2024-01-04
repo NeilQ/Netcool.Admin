@@ -49,7 +49,7 @@ import { HeaderUserComponent } from './widgets/user.component';
       </layout-default-header-item>
        -->
       <layout-default-header-item direction="right">
-        <header-notify />
+        <header-notify/>
       </layout-default-header-item>
       <!--
       <layout-default-header-item direction="right" hidden="mobile">
@@ -114,8 +114,12 @@ import { HeaderUserComponent } from './widgets/user.component';
       </ng-template>
     </layout-default>
 
-    <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
+    <!--
+    @if (showSettingDrawer) {
+      <setting-drawer></setting-drawer>
+    }
     <theme-btn></theme-btn>
+    -->
   `,
   standalone: true,
   imports: [

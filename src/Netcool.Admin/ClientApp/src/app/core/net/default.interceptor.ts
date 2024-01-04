@@ -61,7 +61,6 @@ function handleData(injector: Injector, ev: HttpResponseBase, req: HttpRequest<a
       break;
   }
   if (ev instanceof HttpResponse) {
-    console.log(ev)
     convertDates(ev.body);
   }
   if (ev instanceof HttpErrorResponse) {
