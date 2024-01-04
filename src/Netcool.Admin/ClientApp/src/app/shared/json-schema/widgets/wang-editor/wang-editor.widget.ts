@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '@delon/form';
+import { ControlWidget, DelonFormModule } from '@delon/form';
 import E from 'wangeditor';
 
 @Component({
@@ -12,7 +12,9 @@ import E from 'wangeditor';
       <div [id]="editorId"></div>
 
       <!-- 结束自定义控件区域 -->
-    </sf-item-wrap>`
+    </sf-item-wrap>`,
+  standalone: true,
+  imports: [DelonFormModule]
 })
 export class WangEditorWidget extends ControlWidget implements OnInit {
   /* 用于注册小部件 KEY 值 */

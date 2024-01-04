@@ -1,189 +1,98 @@
-import { Injectable, Injector, isDevMode } from '@angular/core';
-import { Router } from '@angular/router';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
   HttpErrorResponse,
-  HttpEvent,
-  HttpResponseBase, HttpResponse,
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest, HttpResponse,
+  HttpResponseBase
 } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { _HttpClient } from '@delon/theme';
+import { Injector, inject } from '@angular/core';
+import { IGNORE_BASE_URL } from '@delon/theme';
 import { environment } from '@env/environment';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { Observable, of, throwError, mergeMap } from 'rxjs';
+
+import { ReThrowHttpError, checkStatus, getAdditionalHeaders, toLogin, convertDates } from './helper';
+import { tryRefreshToken } from './refresh-token';
 import { extractHttpErrorMessage } from "@core/common";
-import { parse } from "date-fns";
 
-const CODEMESSAGE = {
-  200: '服务器成功返回请求的数据。',
-  201: '新建或修改数据成功。',
-  202: '一个请求已经进入后台排队（异步任务）。',
-  204: '删除数据成功。',
-  400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
-  401: '用户没有权限（令牌、用户名、密码错误）。',
-  403: '用户得到授权，但是访问是被禁止的。',
-  404: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
-  406: '请求的格式不可得。',
-  410: '请求的资源被永久删除，且不会再得到的。',
-  422: '当创建一个对象时，发生一个验证错误。',
-  500: '服务器发生错误，请检查服务器。',
-  502: '网关错误。',
-  503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
-};
 
-/**
- * 默认HTTP拦截器，其注册细节见 `app.module.ts`
- */
-@Injectable()
-export class DefaultInterceptor implements HttpInterceptor {
-
-  private dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)$/;
-  private timezoneDateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)\+(\d{2}):(\d{2})$/;
-  // 2020-03-03T00:00:00+08:00
-
-  private timeRegex = /^\d{2}:\d{2}:\d{2}$/;
-
-  constructor(private injector: Injector) {
+function handleData(injector: Injector, ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandlerFn): Observable<any> {
+  checkStatus(injector, ev);
+  // 业务处理：一些通用操作
+  switch (ev.status) {
+    case 200:
+      // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
+      // 例如响应内容：
+      //  错误内容：{ status: 1, msg: '非法参数' }
+      //  正确内容：{ status: 0, response: {  } }
+      // 则以下代码片断可直接适用
+      // if (ev instanceof HttpResponse) {
+      //   const body = ev.body;
+      //   if (body && body.status !== 0) {
+      //     const customError = req.context.get(CUSTOM_ERROR);
+      //     if (customError) injector.get(NzMessageService).error(body.msg);
+      //     return customError ? throwError(() => ({ body, _throw: true }) as ReThrowHttpError) : of({});
+      //   } else {
+      //     // 返回原始返回体
+      //     if (req.context.get(RAW_BODY) || ev.body instanceof Blob) {
+      //       return of(ev);
+      //     }
+      //     // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
+      //     return of(new HttpResponse({ ...ev, body: body.response } as any));
+      //     // 或者依然保持完整的格式
+      //     return of(ev);
+      //   }
+      // }
+      break;
+    case 401:
+      if (environment.api.refreshTokenEnabled && environment.api.refreshTokenType === 're-request') {
+        return tryRefreshToken(injector, ev, req, next);
+      }
+      toLogin(injector);
+      break;
+    case 403:
+    case 404:
+    case 500:
+      // goTo(injector, `/exception/${ev.status}?url=${req.urlWithParams}`);
+      break;
+    default:
+      if (ev instanceof HttpErrorResponse) {
+        console.warn('未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起，请参考 https://ng-alain.com/docs/server 解决跨域问题', ev);
+      }
+      break;
   }
-
-  private get notification(): NzNotificationService {
-    return this.injector.get(NzNotificationService);
+  if (ev instanceof HttpResponse) {
+    convertDates(ev.body);
   }
-
-  private goTo(url: string) {
-    setTimeout(() => this.injector.get(Router).navigateByUrl(url));
-  }
-
-  private checkStatus(ev: HttpResponseBase) {
-    if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
-      return;
-    }
-
-    const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-    this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
-  }
-
-  private handleData(ev: HttpResponseBase): Observable<any> {
-    // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
-    if (ev.status > 0) {
-      this.injector.get(_HttpClient).cleanLoading();
-    }
-    // this.checkStatus(ev);
-    // 业务处理：一些通用操作
-    switch (ev.status) {
-      case 200:
-        // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
-        // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
-        // 则以下代码片断可直接适用
-        // if (event instanceof HttpResponse) {
-        //     const body: any = event.body;
-        //     if (body && body.status !== 0) {
-        //         this.msg.error(body.msg);
-        //         // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-        //         // this.http.get('/').subscribe() 并不会触发
-        //         return throwError({});
-        //     } else {
-        //         // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-        //         return of(new HttpResponse(Object.assign(event, { body: body.response })));
-        //         // 或者依然保持完整的格式
-        //         return of(event);
-        //     }
-        // }
-        break;
-      case 401:
-        // this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
-        // 清空 token 信息
-        (this.injector.get(DA_SERVICE_TOKEN) as ITokenService).clear();
-        this.goTo('/passport/login');
-        break;
-      case 403:
-        this.goTo(`/exception/${ev.status}`);
-        break;
-      default:
-        if (ev instanceof HttpErrorResponse) {
-          console.warn('未可知错误，大部分是由于后端不支持CORS或无效配置引起', ev);
-        }
-        break;
-    }
-    if (ev instanceof HttpResponse) {
-      this.convertDates(ev.body);
-    }
-    if (ev instanceof HttpErrorResponse) {
-      let msg = extractHttpErrorMessage(ev);
-      if (isDevMode()) {
-        console.error(msg);
-      }
-      if (ev.status != 401) {
-        if (isDevMode()) {
-          this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, msg);
-        } else {
-          this.notification.error('错误', msg);
-        }
-      }
-
-      return throwError(msg);
-    } else {
-      return of(ev);
-    }
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // 统一加上服务端前缀
-    let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      const {baseUrl} = environment.api;
-      url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);
-    }
-
-    const newReq = req.clone({url});
-    return next.handle(newReq).pipe(
-      mergeMap((event: any) => {
-        // 允许统一对请求错误处理
-        if (event instanceof HttpResponseBase) return this.handleData(event);
-        // 若一切都正常，则后续操作
-        return of(event);
-      }),
-      catchError((err: HttpErrorResponse) => this.handleData(err)),
-    );
-  }
-
-  private convertDates(object: Object) {
-    if (!object || !(object instanceof Object)) {
-      return;
-    }
-
-    if (object instanceof Array) {
-      for (const item of object) {
-        this.convertDates(item);
-      }
-    }
-
-    for (const key of Object.keys(object)) {
-      const value = object[key];
-
-      if (value instanceof Array) {
-        for (const item of value) {
-          this.convertDates(item);
-        }
-      }
-
-      if (value instanceof Object) {
-        this.convertDates(value);
-      }
-
-      if (typeof value === 'string' && (this.dateRegex.test(value) || this.timezoneDateRegex.test(value))) {
-        object[key] = new Date(value);
-      }
-
-      if (typeof value === 'string' && this.timeRegex.test(value)) {
-        object[key] = parse(value, 'HH:mm:ss', new Date());
-      }
-    }
+  if (ev instanceof HttpErrorResponse) {
+    let msg = extractHttpErrorMessage(ev);
+    //return throwError(() => ev);
+    return throwError(() => new Error(msg));
+  } else if ((ev as unknown as ReThrowHttpError)._throw === true) {
+    return throwError(() => (ev as unknown as ReThrowHttpError).body);
+  } else {
+    return of(ev);
   }
 }
+
+export const defaultInterceptor: HttpInterceptorFn = (req, next) => {
+  // 统一加上服务端前缀
+  let url = req.url;
+  if (!req.context.get(IGNORE_BASE_URL) && !url.startsWith('https://') && !url.startsWith('http://')) {
+    const {baseUrl} = environment.api;
+    url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);
+  }
+  const newReq = req.clone({url, setHeaders: getAdditionalHeaders(req.headers)});
+  const injector = inject(Injector);
+
+  return next(newReq).pipe(
+    mergeMap(ev => {
+      // 允许统一对请求错误处理
+      if (ev instanceof HttpResponseBase) {
+        return handleData(injector, ev, newReq, next);
+      }
+      // 若一切都正常，则后续操作
+      return of(ev);
+    })
+    // catchError((err: HttpErrorResponse) => handleData(injector, err, newReq, next))
+  );
+};

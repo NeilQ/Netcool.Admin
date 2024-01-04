@@ -6,7 +6,8 @@ import { NotificationService } from "@services";
 import { CrudTableComponentBase, User } from "@models";
 import { AuthUserRoleEditComponent } from "./edit-role/edit-role.component";
 import { AuthUserResetPasswordComponent } from "./reset-password/reset-password.component";
-import { SFSchema, SFTreeSelectWidgetSchema } from "@delon/form";
+import { SFSchema } from "@delon/form";
+import type { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select';
 
 @Component({
   selector: 'auth-user',
